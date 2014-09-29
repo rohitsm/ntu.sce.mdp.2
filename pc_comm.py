@@ -4,7 +4,7 @@ import sys
 __author__ = "Rohit"
 
 tcp_ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = "5143"
+port = 5143
 
 # Create a TCP/IP socket
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
