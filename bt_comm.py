@@ -15,7 +15,7 @@ port = server_socket.getsockname()[1]
 
 uuid = "00001101-0000-1000-8000-00805F9B34FB"
 
-advertise_service( server_sock, "SampleServer",
+advertise_service( server_socket, "SampleServer",
                    service_id = uuid,
                    service_classes = [ uuid, SERIAL_PORT_CLASS ],
                    profiles = [ SERIAL_PORT_PROFILE ],
