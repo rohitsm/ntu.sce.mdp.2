@@ -23,12 +23,13 @@ server_socket.listen(1)			# Listen for requests
 
 # print "Waiting for connection on RFCOMM channel %d" % port
 
-data = client_socket.recv(1024)
-print "Received [%s] " % data
 
 # Accept requests
 client_socket, client_address = server_socket.accept()
 print "Accepted connection from ", client_address
+
+data = client_socket.recv(1024)
+print "Received [%s] " % data
 
 # Close socket connections
 server_socket.close()
