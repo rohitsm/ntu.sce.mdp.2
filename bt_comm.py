@@ -12,7 +12,7 @@ class AndroidAPI(object):
 		self.client_socket = None
 		self.is_connected = False
 
-	def close_socket():
+	def close_socket(self):
 		"""
 		Close socket connections
 		"""
@@ -49,12 +49,12 @@ class AndroidAPI(object):
 		                   service_id = uuid,
 		                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 		                   profiles = [ SERIAL_PORT_PROFILE ],
-						)
+		)
 		
 		print "Waiting for connection on RFCOMM channel %d" % port
 		# Accept requests
 		self.client_socket, client_address = self.server_socket.accept()
-		print "Accepted connection from ", self.client_address
+		print "Accepted connection from ", client_address
 		self.is_connected = True
 
 
@@ -62,10 +62,10 @@ class AndroidAPI(object):
 		"""
 		Write message to Nexus
 		"""
-		while is_connect():
+		while self.is_connect():
 			if len(message) == 0:
 				break
-			client_socket.send(str(message))
+			self.client_socket.send(str(message))
 			print "Send to Android: %s " % message
 			return True
 
@@ -74,14 +74,15 @@ class AndroidAPI(object):
 		"""
 		Read incoming message from Nexus
 		"""
-		while is_connect():
+		while self.is_connect():
 			msg = self.client_socket.recv(1024)
+			if len(msg) == 0:
+				break
 			print "Received [%s] " % msg
+			return msg
 
-		return msg
 
-
-if __name__ = "__main__":
+if __name__ == "__main__":
 	print "Running Main"
 	bt = AndroidAPI()
 	bt.init_bluetooth(btport)
@@ -90,7 +91,7 @@ if __name__ = "__main__":
 	bt.write(send_msg)
 
 	print "read"
-	print "data received: %s " % br.read()
+	print "data received: %s " % bt.read()
 
 	print "closing sockets"
 	bt.close_socket()
