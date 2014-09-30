@@ -21,8 +21,6 @@ advertise_service( server_socket, "SampleServer",
                    profiles = [ SERIAL_PORT_PROFILE ],
 				)
 
-print "SERIAL_PORT_PROFILE: ", str(SERIAL_PORT_PROFILE)
-print "SERIAL_PORT_CLASS: ", str(SERIAL_PORT_CLASS)
 print "Waiting for connection on RFCOMM channel %d" % port
 
 # Accept requests
