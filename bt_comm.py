@@ -31,10 +31,10 @@ print "Accepted connection from ", client_address
 while True:
 	# data = client_socket.recv(1024)
 	# print "Received [%s] " % data
-   	data = input()
-    if len(data) == 0: 
-    	break
-    sock.send(data)
+	data = raw_input()
+	if len(data) == 0:
+		break
+	client_socket.send(data)
 
 
 # Close socket connections
