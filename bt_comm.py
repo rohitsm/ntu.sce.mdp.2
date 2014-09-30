@@ -21,8 +21,9 @@ advertise_service( server_socket, "SampleServer",
                    profiles = [ SERIAL_PORT_PROFILE ],
 				)
 
+print "SERIAL_PORT_PROFILE: ", str(SERIAL_PORT_PROFILE)
+print "SERIAL_PORT_CLASS: ", str(SERIAL_PORT_CLASS)
 print "Waiting for connection on RFCOMM channel %d" % port
-
 
 # Accept requests
 client_socket, client_address = server_socket.accept()
@@ -32,6 +33,6 @@ data = client_socket.recv(1024)
 print "Received [%s] " % data
 
 # Close socket connections
-server_socket.close()
 client_socket.close()
+server_socket.close()
 print "end of program"
