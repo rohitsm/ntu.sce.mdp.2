@@ -17,7 +17,7 @@ client, addr = conn.accept()
 print "Connected! Connection address: ", addr
 
 pc_data = client.recv(1024)
-print "Data received: %s" %pc_data
+print "Data received: %s" % pc_data
 
 # Close the connections
 client.close()
