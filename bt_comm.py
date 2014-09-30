@@ -27,10 +27,14 @@ print "Waiting for connection on RFCOMM channel %d" % port
 client_socket, client_address = server_socket.accept()
 print "Accepted connection from ", client_address
 
-
+# Receive stuff from Nexus 7
 while True:
-	data = client_socket.recv(1024)
-	print "Received [%s] " % data
+	# data = client_socket.recv(1024)
+	# print "Received [%s] " % data
+   	data = input()
+    if len(data) == 0: 
+    	break
+    sock.send(data)
 
 
 # Close socket connections
