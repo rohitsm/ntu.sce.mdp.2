@@ -23,7 +23,7 @@ host = first_match["host"]
 sock.connect((host, port))
 print "Connected to ", str(host)
 sock.send("hello!")
-print "write to andorid"
+print "write to android"
 
 sock.close()
 print "end"
