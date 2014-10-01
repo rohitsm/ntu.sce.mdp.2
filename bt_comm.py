@@ -22,6 +22,8 @@ class AndroidAPI(object):
 		if self.server_socket:
 			print "Closing server socket"
 			self.server_socket.close()
+		self.is_connected = False
+
 
 
 	def is_connect(self):
@@ -77,7 +79,6 @@ class AndroidAPI(object):
 		while self.is_connect():
 			msg = self.client_socket.recv(1024)
 			print "Received [%s] " % msg
-
 		return msg
 
 

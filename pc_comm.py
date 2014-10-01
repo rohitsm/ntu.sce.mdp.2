@@ -3,25 +3,79 @@ import sys
 
 __author__ = "Rohit"
 
-tcp_ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5143
 
-# Create a TCP/IP socket
-conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-conn.bind((tcp_ip, port))
+class PcAPI(object):
 
-# Listen for incoming connection
-conn.listen(1)
+	def __init__(self):
+		self.tcp_ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
+		self.port = 5143
+		self.conn = None
+		self.client = None
+		self.is_connect = False
 
-client, addr = conn.accept()
-print "Connected! Connection address: ", addr
+	def close_sock(self):
+		"""
+		Close socket connections
+		"""
+		if self.conn:
+			print "Closing server socket"
+			self.conn.close()
+		if self.client:
+			print "Closing client socket"
+			self.client.close()
+		self.is_connect = False
 
-pc_data = client.recv(1024)
-print "Data received: %s" % pc_data
 
-# Close the connections
-client.close()
-conn.close()
-print "end of program"
+	def is_connected(self):
+		"""
+		Check status of connection to PC
+		"""
+		return self.is_connect
+
+	def init_pc_comm(self):
+		""
+		Initiate PC connection over TCP
+		""
+		# Create a TCP/IP socket
+		self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.conn.bind((tcp_ip, port))
+		self.conn.listen(1)	#Listen for incoming connections
+		self.client, addr = self.conn.accept()
+		print "Connected! Connection address: ", addr
+		self.is_connect = True
 
 
+	def write_to_PC(self, message):
+		"""
+		Write message to PC
+		"""
+		while self.is_connected():
+			if len(message) == 0:
+				break
+			self.client.send(str(message))
+			print "Send to PC: %s " % message
+			return True
+
+	def read_from_PC(self):
+		"""
+		Read incoming message from PC
+		"""
+		while self.is_connected():
+			pc_data = self.client.recv(1024)
+			print "Data received: %s" % pc_data
+		return pc_data
+
+if __name__ == "__main__":
+	print "main"
+	pc = PcAPI()
+	pc.init_pc_comm()
+
+	send_msg = raw_input()
+	print "write_to_PC(): %s " % send_msg
+	pc.write_to_PC(send_msg)
+
+	# print "read"
+	# print "data received: %s " % pc.read_from_PC()
+
+	print "closing sockets"
+	bt.close_sock()
