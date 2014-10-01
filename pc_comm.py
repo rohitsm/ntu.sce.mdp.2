@@ -10,6 +10,7 @@ class PcAPI(object):
 		self.port = 5143
 		self.conn = None
 		self.client = None
+		self.addr = None
 		self.is_connect = False
 
 	def close_sock(self):
@@ -37,9 +38,9 @@ class PcAPI(object):
 		# Create a TCP/IP socket
 		self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.conn.bind((self.tcp_ip, self.port))
-		self.conn.listen(1)	#Listen for incoming connections
-		self.client, addr = self.conn.accept()
-		print "Connected! Connection address: ", addr
+		self.conn.listen(1)		#Listen for incoming connections
+		self.client, self.addr = self.conn.accept()
+		print "Connected! Connection address: ", self.addr
 		self.is_connect = True
 
 
@@ -50,9 +51,8 @@ class PcAPI(object):
 		while self.is_connected():
 			if len(message) == 0:
 				break
-			self.client.send(str(message))
+			self.client.sendto(message, self.addr)
 			print "Send to PC: %s " % message
-			return True
 
 	def read_from_PC(self):
 		"""
