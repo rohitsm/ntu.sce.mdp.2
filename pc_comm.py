@@ -36,7 +36,7 @@ class PcAPI(object):
 		"""
 		# Create a TCP/IP socket
 		self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.conn.bind((tcp_ip, port))
+		self.conn.bind((self.tcp_ip, self.port))
 		self.conn.listen(1)	#Listen for incoming connections
 		self.client, addr = self.conn.accept()
 		print "Connected! Connection address: ", addr
@@ -59,7 +59,10 @@ class PcAPI(object):
 		Read incoming message from PC
 		"""
 		while self.is_connected():
+			if len()
 			pc_data = self.client.recv(1024)
+			if len(pc_data) == 0:
+				break
 			print "Data received: %s" % pc_data
 		return pc_data
 
