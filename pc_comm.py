@@ -3,7 +3,6 @@ import sys
 
 __author__ = "Rohit"
 
-
 class PcAPI(object):
 
 	def __init__(self):
@@ -25,7 +24,6 @@ class PcAPI(object):
 			self.client.close()
 		self.is_connect = False
 
-
 	def is_connected(self):
 		"""
 		Check status of connection to PC
@@ -33,9 +31,9 @@ class PcAPI(object):
 		return self.is_connect
 
 	def init_pc_comm(self):
-		""
+		"""
 		Initiate PC connection over TCP
-		""
+		"""
 		# Create a TCP/IP socket
 		self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.conn.bind((tcp_ip, port))
