@@ -49,7 +49,7 @@ class AndroidAPI(object):
 		                   service_id = uuid,
 		                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 		                   profiles = [ SERIAL_PORT_PROFILE ],
-		)
+						)
 		
 		print "Waiting for connection on RFCOMM channel %d" % port
 		# Accept requests
@@ -76,22 +76,22 @@ class AndroidAPI(object):
 		"""
 		while self.is_connect():
 			msg = self.client_socket.recv(1024)
-			if len(msg) == 0:
-				break
 			print "Received [%s] " % msg
-			return msg
+
+		return msg
 
 
 if __name__ == "__main__":
 	print "Running Main"
 	bt = AndroidAPI()
 	bt.init_bluetooth(btport)
+	
 	send_msg = raw_input()
 	print "Write(): %s " % send_msg
 	bt.write(send_msg)
 
-	print "read"
-	print "data received: %s " % bt.read()
+	#print "read"
+	#print "data received: %s " % bt.read()
 
 	print "closing sockets"
 	bt.close_socket()
