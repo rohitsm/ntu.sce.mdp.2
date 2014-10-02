@@ -1,5 +1,7 @@
 import socket
 import string
+import time
+import threading
 
 __author__ = "Rohit"
 
@@ -16,19 +18,35 @@ message = list(string.ascii_lowercase)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((ip, port))
 
-while True:
-	# Send data
 
+# Send data
+def write(message):
 	for item in message:
 		client_socket.send(item)
 		print "sending: ", item
 
-	# Receive data
+# Receive data
+def receive():
 	data = client_socket.recv(1024)
 	print "Data received: %s " % data
 	if (data == 'q' or len(data) == 0):
 		break
+	
 
+# while True:
+
+# 		time.sleep(0.5)
+
+rt = threading.Thread(target = receive)
+wt = threading.Thread(target = write)
+
+rt.start()
+wt.start()
+print "start rt and wt"
+
+rt.join()
+wt.join()
+print "stop rt and wt"
 
 # Close connections
 client_socket.close()

@@ -4,8 +4,9 @@ from pc_comm import *
 
 __author__ = 'Rohit'
 
-class TestThread(object):
+class TestThread(threading.Thread):
 	def __init__(self):
+		threading.Thread.__init__(self)
 		self.pc_api = PcAPI()
 		self.pc_api.init_pc_comm()
 
@@ -17,8 +18,11 @@ class TestThread(object):
 		send_msg = raw_input()
 		# print "write_to_PC(): %s " % send_msg	
 		while len(send_msg) != 0 or send_msg == 'q':
-			self.pc_api.write_to_PC(msg)
-			print "Writing to PC: %s " % msg
+			self.pc_api.write_to_PC(send_msg)
+			print "Writing to PC: %s " % send_msg
+			print "Enter text to send: "
+			send_msg = raw_input()
+
 
 	def readPC(self):
 		"""
@@ -29,9 +33,9 @@ class TestThread(object):
 			read_msg = self.pc_api.read_from_PC()
 			if len(read_msg) == 0 or read_msg == 'q':
 				break
-		print "Message received from PC %s " %read_msg
+			print "Message received from PC %s " %read_msg
 
-	def close_all_sockets():
+	def close_all_sockets(self):
 		self.pc_api.close_sock()
 
 
