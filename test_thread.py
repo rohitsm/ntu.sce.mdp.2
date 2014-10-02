@@ -19,6 +19,7 @@ class TestThread(threading.Thread):
 		# print "write_to_PC(): %s " % send_msg	
 		while True:
 			if len(send_msg) == 0 or send_msg == 'q':
+				print "quitting..."
 				break
 			self.pc_api.write_to_PC(send_msg)
 			print "Writing to PC: %s " % send_msg
