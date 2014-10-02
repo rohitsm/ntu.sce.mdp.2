@@ -3,7 +3,7 @@ from bluetooth import *
 __author__ = 'Rohit'
 
 # Server inits
-btport = 4					# RFCOMM port 4
+# btport = 4					# RFCOMM port 4
 
 class AndroidAPI(object):
 
@@ -33,13 +33,14 @@ class AndroidAPI(object):
 		return self.bt_is_connected
 
 
-	def init_bluetooth(self, btport):
+	def init_bluetooth(self):
 		"""
 		Connect to Nexus 7
 		RFCOMM port: 4
 		Nexus 7 MAC address: 08:60:6E:A5:82:C8
 		"""
-		
+		btport = 4
+
 		# Creating the server socket and bind to port		
 		self.server_socket = BluetoothSocket( RFCOMM )
 		self.server_socket.bind(("", btport))
@@ -85,7 +86,7 @@ class AndroidAPI(object):
 if __name__ == "__main__":
 	print "Running Main"
 	bt = AndroidAPI()
-	bt.init_bluetooth(btport)
+	bt.init_bluetooth()
 	
 	send_msg = raw_input()
 	print "Write(): %s " % send_msg
