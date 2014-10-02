@@ -65,18 +65,18 @@ if __name__ == "__main__":
 
 	# rt.setDaemon(True)
 
-	thread_list.append(rt)
-	print "Append thread 'rt': %s " % rt.getName()
-	thread_list.append(wt)
-	print "Append thread 'wt': %s " % wt.getName()
+	# thread_list.append(rt)
+	# print "Append thread 'rt': %s " % rt.getName()
+	# thread_list.append(wt)
+	# print "Append thread 'wt': %s " % wt.getName()
 
 
-	for thread in thread_list:
-		print "%s.join()" %s thread.getName()
-		thread.join()
+	# for thread in thread_list:
+	# 	print "%s.join()" % thread.getName()
+	# 	thread.join()
 	
-	# rt.join()
-	# wt.join()
+	rt.join()
+	wt.join()
 	print "join rt and wt"
 	pc_thread.close_all_sockets()
 	print "End thread"

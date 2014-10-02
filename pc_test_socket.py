@@ -9,7 +9,7 @@ __author__ = "Rohit"
 
 
 ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5158
+port = 5162
 # message = "Hello World!"
 message = list(string.ascii_lowercase)
 
@@ -60,14 +60,15 @@ rt.start()
 wt.start()
 print "start rt and wt"
 
-thread_list.append(rt)
-thread_list.append(wt)
+# thread_list.append(rt)
+# thread_list.append(wt)
 
-for thread in thread_list:
-	print "%s.join()" %s thread.getName()
-	thread.join()
-# rt.join()
-# wt.join()
+# for thread in thread_list:
+# 	print "%s.join()" % thread.getName()
+# 	thread.join()
+
+rt.join()
+wt.join()
 print "stop rt and wt"
 
 # Close connections
