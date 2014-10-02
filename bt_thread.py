@@ -38,7 +38,7 @@ class BTThread(threading.Thread):
 			if len(read_bt_msg) == 0 or read_bt_msg == 'q':
 				print "quitting..."
 				break
-			print "Message received from BT: %s" % read_from_bt
+			print "Message received from BT: %s" % read_bt_msg
 		print "quit readBT"
 
 	def close_all_bt_sockets(self):
