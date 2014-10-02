@@ -35,7 +35,7 @@ class BTThread(threading.Thread):
 		print "inside readBT"
 		while True:
 			read_bt_msg = self.bt_api.read_from_bt()
-			if len(read_from_bt) == 0 or read_from_bt == 'q':
+			if len(read_bt_msg) == 0 or read_bt_msg == 'q':
 				print "quitting..."
 				break
 			print "Message received from BT: %s" % read_from_bt
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 	rt.join()
 	wt.join()
 	print "join rt and wt"
-	bt_thread.close_all_pc_sockets()
+	bt_thread.close_all_bt_sockets()
 	print "End thread"
 
 
