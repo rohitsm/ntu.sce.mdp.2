@@ -65,21 +65,21 @@ class AndroidAPI(object):
 		"""
 		Write message to Nexus
 		"""
-		while self.bt_is_connect():
-			if len(message) == 0:
-				break
-			self.client_socket.send(str(message))
-			print "Send to Android: %s " % message
-			return True
+		# while self.bt_is_connect():
+		# if len(message) == 0:
+		# 	break
+		self.client_socket.send(str(message))
+		print "Send to Android: %s " % message
+		# return True
 
 			
 	def read_from_bt(self):
 		"""
 		Read incoming message from Nexus
 		"""
-		while self.bt_is_connect():
-			msg = self.client_socket.recv(1024)
-			print "Received [%s] " % msg
+		# while self.bt_is_connect():
+		msg = self.client_socket.recv(1024)
+		print "Received [%s] " % msg
 		return msg
 
 
