@@ -9,7 +9,7 @@ __author__ = "Rohit"
 
 
 ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5157
+port = 5158
 # message = "Hello World!"
 message = list(string.ascii_lowercase)
 
@@ -64,6 +64,7 @@ thread_list.append(rt)
 thread_list.append(wt)
 
 for thread in thread_list:
+	print "%s.join()" %s thread.getName()
 	thread.join()
 # rt.join()
 # wt.join()

@@ -7,7 +7,7 @@ class PcAPI(object):
 
 	def __init__(self):
 		self.tcp_ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-		self.port = 5157
+		self.port = 5158
 		self.conn = None
 		self.client = None
 		self.addr = None

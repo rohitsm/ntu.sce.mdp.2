@@ -9,7 +9,6 @@ class TestThread(threading.Thread):
 		threading.Thread.__init__(self)
 		self.pc_api = PcAPI()
 		self.pc_api.init_pc_comm()
-		self.name = 
 
 	def writePC(self):
 		"""
@@ -73,11 +72,11 @@ if __name__ == "__main__":
 
 
 	for thread in thread_list:
+		print "%s.join()" %s thread.getName()
 		thread.join()
 	
-
-	rt.join()
-	wt.join()
+	# rt.join()
+	# wt.join()
 	print "join rt and wt"
 	pc_thread.close_all_sockets()
 	print "End thread"
