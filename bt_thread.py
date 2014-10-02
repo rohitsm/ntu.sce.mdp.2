@@ -26,6 +26,7 @@ class BTThread(threading.Thread):
 			print "Enter text to send: "
 			send_bt_msg = raw_input()
 		print "quit writeBT"
+		return send_bt_msg
 
 
 	def readBT(self):

@@ -26,6 +26,7 @@ class PCThread(threading.Thread):
 			print "Enter text to send: "
 			send_msg = raw_input()
 		print "quit writePC"
+		return writePC
 
 
 	def readPC(self):
