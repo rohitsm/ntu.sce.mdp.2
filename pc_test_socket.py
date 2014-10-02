@@ -23,7 +23,9 @@ client_socket.connect((ip, port))
 def write():
 	print "Enter text to send: "
 	msg = raw_input()
-	while len(msg) != 0 or msg != q:
+	while True:
+		if len(msg) == 0 or msg == 'q':
+			break
 		client_socket.send(msg)
 		print "sending: ", msg
 		print "Enter text to send: "
@@ -31,11 +33,15 @@ def write():
 
 # Receive data
 def receive():
-	data = client_socket.recv(1024)
-	print "Data received: %s " % data
 	while True:
-		if (data == 'q' or len(data) == 0):
+		data = client_socket.recv(1024)
+		if len(data) == 0 or data == 'q':
+			print "quitting..."
 			break
+		print "Data received: %s " % data
+		# while True:
+		# 	if (data == 'q' or len(data) == 0):
+		# 		break
 	
 	
 
@@ -43,6 +49,7 @@ def receive():
 
 # 		time.sleep(0.5)
 
+thread_list = []
 rt = threading.Thread(target = receive)
 wt = threading.Thread(target = write)
 
@@ -50,8 +57,13 @@ rt.start()
 wt.start()
 print "start rt and wt"
 
-rt.join()
-wt.join()
+thread_list.append(rt)
+thread_list.append(wt)
+
+for thread in thread_list:
+	thread.join()
+# rt.join()
+# wt.join()
 print "stop rt and wt"
 
 # Close connections

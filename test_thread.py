@@ -17,7 +17,9 @@ class TestThread(threading.Thread):
 		print "Enter text to send: "
 		send_msg = raw_input()
 		# print "write_to_PC(): %s " % send_msg	
-		while len(send_msg) != 0 or send_msg != 'q':
+		while True:
+			if len(send_msg) == 0 or send_msg == 'q':
+				break
 			self.pc_api.write_to_PC(send_msg)
 			print "Writing to PC: %s " % send_msg
 			print "Enter text to send: "
@@ -32,6 +34,7 @@ class TestThread(threading.Thread):
 		while True:
 			read_msg = self.pc_api.read_from_PC()
 			if len(read_msg) == 0 or read_msg == 'q':
+				print "quitting..."
 				break
 			print "Message received from PC %s " %read_msg
 
@@ -42,6 +45,7 @@ class TestThread(threading.Thread):
 if __name__ == "__main__":
 	print "main"
 
+	thread_list = []
 	pc_thread = TestThread()
 
 	# Read thread
@@ -56,6 +60,13 @@ if __name__ == "__main__":
 	print "start rt and wt"
 
 	# rt.setDaemon(True)
+
+	thread_list.append(rt)
+	thread_list.append(wt)
+
+	for thread in thread_list:
+		thread.join()
+	
 
 	rt.join()
 	wt.join()
