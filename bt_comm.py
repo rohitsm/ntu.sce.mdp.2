@@ -10,27 +10,27 @@ class AndroidAPI(object):
 	def __init__(self):
 		self.server_socket = None
 		self.client_socket = None
-		self.is_connected = False
+		self.bt_is_connected = False
 
 	def close_socket(self):
 		"""
 		Close socket connections
 		"""
 		if self.client_socket:
-			print "Closing client socket"
 			self.client_socket.close()
+			print "Closing client socket"
 		if self.server_socket:
-			print "Closing server socket"
 			self.server_socket.close()
-		self.is_connected = False
+			print "Closing server socket"
+		self.bt_is_connected = False
 
 
 
-	def is_connect(self):
+	def bt_is_connect(self):
 		"""
 		Check status of BT connection
 		"""
-		return self.is_connected
+		return self.bt_is_connected
 
 
 	def init_bluetooth(self, btport):
@@ -57,14 +57,14 @@ class AndroidAPI(object):
 		# Accept requests
 		self.client_socket, client_address = self.server_socket.accept()
 		print "Accepted connection from ", client_address
-		self.is_connected = True
+		self.bt_is_connected = True
 
 
-	def write(self, message):
+	def write_to_bt(self, message):
 		"""
 		Write message to Nexus
 		"""
-		while self.is_connect():
+		while self.bt_is_connect():
 			if len(message) == 0:
 				break
 			self.client_socket.send(str(message))
@@ -72,11 +72,11 @@ class AndroidAPI(object):
 			return True
 
 			
-	def read(self):
+	def read_from_bt(self):
 		"""
 		Read incoming message from Nexus
 		"""
-		while self.is_connect():
+		while self.bt_is_connect():
 			msg = self.client_socket.recv(1024)
 			print "Received [%s] " % msg
 		return msg
@@ -89,10 +89,10 @@ if __name__ == "__main__":
 	
 	send_msg = raw_input()
 	print "Write(): %s " % send_msg
-	bt.write(send_msg)
+	bt.write_to_bt(send_msg)
 
 	#print "read"
-	#print "data received: %s " % bt.read()
+	# print "data received: %s " % bt.read_from_bt()
 
 	print "closing sockets"
 	bt.close_socket()

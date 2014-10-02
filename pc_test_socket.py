@@ -15,11 +15,11 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((ip, port))
 
 # Send data
-# client_socket.send(message)
+client_socket.send(message)
 
 # Receive data
-data = client_socket.recv(1024)
-print "Data received: %s " % data
+# data = client_socket.recv(1024)
+# print "Data received: %s " % data
 
 
 # Close connections

@@ -11,25 +11,25 @@ class PcAPI(object):
 		self.conn = None
 		self.client = None
 		self.addr = None
-		self.is_connect = False
+		self.pc_is_connect = False
 
 	def close_sock(self):
 		"""
 		Close socket connections
 		"""
 		if self.conn:
-			print "Closing server socket"
 			self.conn.close()
+			print "Closing server socket"
 		if self.client:
-			print "Closing client socket"
 			self.client.close()
-		self.is_connect = False
+			print "Closing client socket"
+		self.pc_is_connect = False
 
-	def is_connected(self):
+	def pc_is_connected(self):
 		"""
 		Check status of connection to PC
 		"""
-		return self.is_connect
+		return self.pc_is_connect
 
 	def init_pc_comm(self):
 		"""
@@ -41,14 +41,13 @@ class PcAPI(object):
 		self.conn.listen(1)		#Listen for incoming connections
 		self.client, self.addr = self.conn.accept()
 		print "Connected! Connection address: ", self.addr
-		self.is_connect = True
-
+		self.pc_is_connect = True
 
 	def write_to_PC(self, message):
 		"""
 		Write message to PC
 		"""
-		while self.is_connected():
+		while self.pc_is_connected():
 			if len(message) == 0:
 				break
 			self.client.sendto(message, self.addr)
@@ -58,25 +57,25 @@ class PcAPI(object):
 		"""
 		Read incoming message from PC
 		"""
-		while self.is_connected():
-			if len()
+		while self.pc_is_connected():
 			pc_data = self.client.recv(1024)
-			if len(pc_data) == 0:
+			if len(pc_data) == 0 or pc_data == 'q':
 				break
 			print "Data received: %s" % pc_data
-		return pc_data
+			return pc_data
 
 if __name__ == "__main__":
 	print "main"
 	pc = PcAPI()
 	pc.init_pc_comm()
 
-	send_msg = raw_input()
-	print "write_to_PC(): %s " % send_msg
-	pc.write_to_PC(send_msg)
+	# send_msg = raw_input()
+	# print "write_to_PC(): %s " % send_msg
+	# pc.write_to_PC(send_msg)
 
-	# print "read"
-	# print "data received: %s " % pc.read_from_PC()
+	print "read"
+	msg = pc.read_from_PC()
+	print "data received: %s " % msg
 
 	print "closing sockets"
-	bt.close_sock()
+	pc.close_sock()
