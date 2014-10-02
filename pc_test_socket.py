@@ -20,17 +20,23 @@ client_socket.connect((ip, port))
 
 
 # Send data
-def write(message):
-	for item in message:
-		client_socket.send(item)
-		print "sending: ", item
+def write():
+	print "Enter text to send: "
+	msg = raw_input()
+	while len(msg) != 0 or msg != q:
+		client_socket.send(msg)
+		print "sending: ", msg
+		print "Enter text to send: "
+		msg = raw_input()
 
 # Receive data
 def receive():
 	data = client_socket.recv(1024)
 	print "Data received: %s " % data
-	if (data == 'q' or len(data) == 0):
-		break
+	while True:
+		if (data == 'q' or len(data) == 0):
+			break
+	
 	
 
 # while True:
