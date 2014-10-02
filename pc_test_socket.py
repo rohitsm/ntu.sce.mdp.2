@@ -24,13 +24,15 @@ def write():
 	print "Enter text to send: "
 	msg = raw_input()
 	while True:
+		client_socket.send(msg)
 		if len(msg) == 0 or msg == 'q':
+			# Send message in anycase and then quit
 			print "quitting..."
 			break
-		client_socket.send(msg)
 		print "sending: ", msg
 		print "Enter text to send: "
 		msg = raw_input()
+	print "quit write()"
 
 # Receive data
 def receive():
@@ -43,7 +45,7 @@ def receive():
 		# while True:
 		# 	if (data == 'q' or len(data) == 0):
 		# 		break
-	
+	print "quit receive()"
 	
 
 # while True:

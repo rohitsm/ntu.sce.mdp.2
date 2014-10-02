@@ -9,6 +9,7 @@ class TestThread(threading.Thread):
 		threading.Thread.__init__(self)
 		self.pc_api = PcAPI()
 		self.pc_api.init_pc_comm()
+		self.name = 
 
 	def writePC(self):
 		"""
@@ -18,13 +19,15 @@ class TestThread(threading.Thread):
 		send_msg = raw_input()
 		# print "write_to_PC(): %s " % send_msg	
 		while True:
-			if len(send_msg) == 0 or send_msg == 'q':
-				print "quitting..."
-				break
 			self.pc_api.write_to_PC(send_msg)
+			if len(send_msg) == 0 or send_msg == 'q':
+				# Send message in anycase and then quit
+				print "quitting..."	
+				break
 			print "Writing to PC: %s " % send_msg
 			print "Enter text to send: "
 			send_msg = raw_input()
+		print "quit writePC"
 
 
 	def readPC(self):
@@ -38,6 +41,7 @@ class TestThread(threading.Thread):
 				print "quitting..."
 				break
 			print "Message received from PC %s " %read_msg
+		print "quit readPC"
 
 	def close_all_sockets(self):
 		self.pc_api.close_sock()
@@ -63,7 +67,10 @@ if __name__ == "__main__":
 	# rt.setDaemon(True)
 
 	thread_list.append(rt)
+	print "Append thread 'rt': %s " % rt.getName()
 	thread_list.append(wt)
+	print "Append thread 'wt': %s " % wt.getName()
+
 
 	for thread in thread_list:
 		thread.join()
