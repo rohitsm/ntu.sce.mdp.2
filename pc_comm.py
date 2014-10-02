@@ -13,7 +13,7 @@ class PcAPI(object):
 		self.addr = None
 		self.pc_is_connect = False
 
-	def close_sock(self):
+	def close_pc_socket(self):
 		"""
 		Close socket connections
 		"""
@@ -85,4 +85,4 @@ if __name__ == "__main__":
 	print "data received: %s " % msg
 
 	print "closing sockets"
-	pc.close_sock()
+	pc.close_pc_socket()

@@ -12,7 +12,7 @@ class AndroidAPI(object):
 		self.client_socket = None
 		self.bt_is_connected = False
 
-	def close_socket(self):
+	def close_bt_socket(self):
 		"""
 		Close socket connections
 		"""
@@ -95,5 +95,5 @@ if __name__ == "__main__":
 	# print "data received: %s " % bt.read_from_bt()
 
 	print "closing sockets"
-	bt.close_socket()
+	bt.close_bt_socket()
 
