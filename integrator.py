@@ -6,17 +6,21 @@ from bt_thread import *
 
 __author__ = 'Rohit'
 
-# Create two queues
+# Create queues
 to_bt = Queue.Queue() 
 to_pc = Queue.Queue()
 
-def from_pc_to_bt():
+
+def send_to_pc():
+	
+
+
 	
 
 
 
 
-def from_bt_to_pc():
+def send_to_bt():
 
 
 
