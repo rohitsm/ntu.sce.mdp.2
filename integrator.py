@@ -13,6 +13,7 @@ to_pc = Queue.Queue()
 
 if __name__ == "__main__":
 	pc_thread = PCThread()
+	bt_thread = BTThread()
 
 	# PC read and write thread
 	rt_pc = threading.Thread(target = pc_thread.readPC, name = "pc_read_thread")
@@ -21,9 +22,9 @@ if __name__ == "__main__":
 	print "created wt_pc"
 
 	# Bluetooth (BT) read and write thread
-	rt_bt = threading.Thread(target = pc_thread.readBT, args = (to_pc), name = "bt_read_thread")
+	rt_bt = threading.Thread(target = bt_thread.readBT, args = (to_pc), name = "bt_read_thread")
 	print "created bt_pc"
-	wt_bt = threading.Thread(target = pc_thread.writeBT, name = "bt_write_thread")
+	wt_bt = threading.Thread(target = bt_thread.writeBT, name = "bt_write_thread")
 	print "created bt_pc"
 
 	# Start Threads
