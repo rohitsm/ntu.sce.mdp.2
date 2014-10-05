@@ -9,22 +9,7 @@ __author__ = 'Rohit'
 # Create queues
 to_bt = Queue.Queue() 
 to_pc = Queue.Queue()
-
-
-def send_to_pc():
-	
-
-
-	
-
-
-
-
-def send_to_bt():
-
-
-
-
+# to_sr = Queue.Queue()		// Serial queue
 
 if __name__ == "__main__":
 	pc_thread = PCThread()
@@ -36,7 +21,7 @@ if __name__ == "__main__":
 	print "created wt_pc"
 
 	# Bluetooth (BT) read and write thread
-	rt_bt = threading.Thread(target = pc_thread.readBT, name = "bt_read_thread")
+	rt_bt = threading.Thread(target = pc_thread.readBT, args = (to_pc), name = "bt_read_thread")
 	print "created bt_pc"
 	wt_bt = threading.Thread(target = pc_thread.writeBT, name = "bt_write_thread")
 	print "created bt_pc"
