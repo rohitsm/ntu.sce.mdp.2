@@ -69,7 +69,7 @@ class AndroidAPI(object):
 		# if len(message) == 0:
 		# 	break
 		self.client_socket.send(str(message))
-		print "Send to Android: %s " % message
+		# print "Send to Android: %s " % message
 		# return True
 
 			
@@ -79,22 +79,22 @@ class AndroidAPI(object):
 		"""
 		# while self.bt_is_connect():
 		msg = self.client_socket.recv(1024)
-		print "Received [%s] " % msg
+		# print "Received [%s] " % msg
 		return msg
 
 
-if __name__ == "__main__":
-	print "Running Main"
-	bt = AndroidAPI()
-	bt.init_bluetooth()
+# if __name__ == "__main__":
+# 	print "Running Main"
+# 	bt = AndroidAPI()
+# 	bt.init_bluetooth()
 	
-	send_msg = raw_input()
-	print "Write(): %s " % send_msg
-	bt.write_to_bt(send_msg)
+# 	send_msg = raw_input()
+# 	print "Write(): %s " % send_msg
+# 	bt.write_to_bt(send_msg)
 
-	#print "read"
-	# print "data received: %s " % bt.read_from_bt()
+# 	#print "read"
+# 	# print "data received: %s " % bt.read_from_bt()
 
-	print "closing sockets"
-	bt.close_bt_socket()
+# 	print "closing sockets"
+# 	bt.close_bt_socket()
 

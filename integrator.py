@@ -23,9 +23,9 @@ if __name__ == "__main__":
 
 	# Bluetooth (BT) read and write thread
 	rt_bt = threading.Thread(target = bt_thread.readBT, args = (to_pc,), name = "bt_read_thread")
-	print "created bt_pc"
+	print "created rt_bt"
 	wt_bt = threading.Thread(target = bt_thread.writeBT, args = (to_bt,), name = "bt_write_thread")
-	print "created bt_pc"
+	print "created wt_bt"
 
 	# Start Threads
 	rt_pc.start()

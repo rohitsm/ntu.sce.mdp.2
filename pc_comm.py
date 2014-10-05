@@ -54,7 +54,7 @@ class PcAPI(object):
 		# 	break
 
 		self.client.sendto(message, self.addr)
-		print "Send to PC: %s " % message
+		# print "Send to PC: %s " % message
 
 	def read_from_PC(self):
 		"""
@@ -68,21 +68,21 @@ class PcAPI(object):
 		# if len(pc_data) == 0 or pc_data == 'q':
 		# 	break
 
-		print "Data received: %s" % pc_data
+		# print "Data received: %s" % pc_data
 		return pc_data
 
-if __name__ == "__main__":
-	print "main"
-	pc = PcAPI()
-	pc.init_pc_comm()
+# if __name__ == "__main__":
+# 	print "main"
+# 	pc = PcAPI()
+# 	pc.init_pc_comm()
 
-	# send_msg = raw_input()
-	# print "write_to_PC(): %s " % send_msg
-	# pc.write_to_PC(send_msg)
+# 	# send_msg = raw_input()
+# 	# print "write_to_PC(): %s " % send_msg
+# 	# pc.write_to_PC(send_msg)
 
-	print "read"
-	msg = pc.read_from_PC()
-	print "data received: %s " % msg
+# 	print "read"
+# 	msg = pc.read_from_PC()
+# 	print "data received: %s " % msg
 
-	print "closing sockets"
-	pc.close_pc_socket()
+# 	print "closing sockets"
+# 	pc.close_pc_socket()

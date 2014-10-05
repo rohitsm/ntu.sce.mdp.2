@@ -17,6 +17,7 @@ class PCThread(threading.Thread):
 		print "Sending to PC: "
 		while True:
 			while not to_pc_q.empty():
+				print "WritePC: to_pc_q = %s " %to_pc_q
 				send_pc_msg = to_pc_q.get()
 				self.pc_api.write_to_PC(send_pc_msg)
 				if len(send_pc_msg) == 0 or send_pc_msg == 'q':
@@ -27,12 +28,12 @@ class PCThread(threading.Thread):
 		print "quit writePC"
 		# return send_pc_msg
 
-# Receives two Qs as arguments and writes (put) to them
+	# Receives two Qs as arguments and writes (put) to them
 	def readPC(self, to_bt_q): # Include "to_sr_q" in the args
 		"""
 		Invoke read_from_PC()
 		"""
-		print "inside readPC"
+		print "readPC: to_bt_q = %s " %to_bt_q
 		while True:
 			read_pc_msg = self.pc_api.read_from_PC()
 			if len(read_pc_msg) == 0 or read_pc_msg == 'q':
