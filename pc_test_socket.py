@@ -9,7 +9,7 @@ __author__ = "Rohit"
 
 
 ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5163
+port = 5165
 # message = "Hello World!"
 message = list(string.ascii_lowercase)
 

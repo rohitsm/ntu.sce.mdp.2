@@ -16,15 +16,15 @@ if __name__ == "__main__":
 	bt_thread = BTThread()
 
 	# PC read and write thread
-	rt_pc = threading.Thread(target = pc_thread.readPC, name = "pc_read_thread")
+	rt_pc = threading.Thread(target = pc_thread.readPC, args = (to_bt,), name = "pc_read_thread")
 	print "created rt_pc"
-	wt_pc = threading.Thread(target = pc_thread.writePC, name = "pc_write_thread")
+	wt_pc = threading.Thread(target = pc_thread.writePC, args = (to_pc,), name = "pc_write_thread")
 	print "created wt_pc"
 
 	# Bluetooth (BT) read and write thread
-	rt_bt = threading.Thread(target = bt_thread.readBT, args = (to_pc), name = "bt_read_thread")
+	rt_bt = threading.Thread(target = bt_thread.readBT, args = (to_pc,), name = "bt_read_thread")
 	print "created bt_pc"
-	wt_bt = threading.Thread(target = bt_thread.writeBT, name = "bt_write_thread")
+	wt_bt = threading.Thread(target = bt_thread.writeBT, args = (to_bt,), name = "bt_write_thread")
 	print "created bt_pc"
 
 	# Start Threads
@@ -44,5 +44,6 @@ if __name__ == "__main__":
 
 	print "end of joins"
 
-	pc_thread.close_all_bt_sockets()
+	pc_thread.close_all_pc_sockets()
+	bt_thread.close_all_bt_sockets()
 	print "End thread"
