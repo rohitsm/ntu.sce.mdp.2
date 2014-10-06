@@ -22,7 +22,7 @@ class AndroidAPI(object):
 		self.server_socket = BluetoothSocket( RFCOMM )
 		self.server_socket.bind(("", btport))
 		self.server_socket.listen(1)	# Listen for requests
-		port = self.server_socket.getsockname()[1]
+		self.port = self.server_socket.getsockname()[1]
 		uuid = "00001101-0000-1000-8000-00805F9B34FB"
 
 		advertise_service( self.server_socket, "SampleServer",
@@ -30,7 +30,6 @@ class AndroidAPI(object):
 		                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 		                   profiles = [ SERIAL_PORT_PROFILE ],
 						)
-		connect_bluetooth(port)
 
 	def close_bt_socket(self):
 		"""
