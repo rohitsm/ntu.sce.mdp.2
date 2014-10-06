@@ -8,7 +8,7 @@ class BTThread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.bt_api = AndroidAPI()
-		self.bt_api.init_bluetooth()
+		self.bt_api.connect_bluetooth()
 
 	def writeBT(self, to_bt_q):
 		"""
@@ -16,14 +16,19 @@ class BTThread(threading.Thread):
 		"""
 		print "Sending text to Andorid: "
 		while True:
-			while not to_bt_q.empty():
-				send_bt_msg = to_bt_q.get()
-				self.bt_api.write_to_bt(send_bt_msg)
-				if len(send_bt_msg) == 0 or send_bt_msg == 'q':
-					#Send message in anycase and then quit
-					print "quitting..."
-					break
-				print "Writing to BT: %s" % send_bt_msg
+			try:
+				while not to_bt_q.empty():
+					send_bt_msg = to_bt_q.get()
+					self.bt_api.write_to_bt(send_bt_msg)
+					if len(send_bt_msg) == 0 or send_bt_msg == 'q':
+						# Send message in anycase and then quit
+						print "quitting..."
+						break
+					print "Writing to BT: %s" % send_bt_msg
+			except BluetoothError:
+				print "Bluetooth Error. Connection reset by peer"
+				self.bt_api.connect_bluetooth()
+				continue
 		print "quit writeBT"
 		# return send_bt_msg
 
@@ -45,7 +50,7 @@ class BTThread(threading.Thread):
 				to_pc_q.put(read_bt_msg[1:]) 	# strip header here
 				print "testing pc q: Value written = %s " % read_bt_msg[1:]
 			
-			if (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
+			elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
 				# to_sr_q.put(read_bt_msg[1:]) 	# strip header here
 				print "testing serial q: Value written = %s " % read_bt_msg[1:]
 			

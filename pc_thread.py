@@ -46,7 +46,7 @@ class PCThread(threading.Thread):
 				to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
 				print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
-			if (read_pc_msg[0].lower() == 'h'):
+			elif (read_pc_msg[0].lower() == 'h'):
 				# to_sr_q.put(read_pc_msg[1:])	# send to hardware
 				print "testing pc q: Value written = %s " % read_pc_msg[1:]
 

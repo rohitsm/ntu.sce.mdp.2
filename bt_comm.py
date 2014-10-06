@@ -8,37 +8,14 @@ __author__ = 'Rohit'
 class AndroidAPI(object):
 
 	def __init__(self):
-		self.server_socket = None
-		self.client_socket = None
-		self.bt_is_connected = False
-
-	def close_bt_socket(self):
-		"""
-		Close socket connections
-		"""
-		if self.client_socket:
-			self.client_socket.close()
-			print "Closing client socket"
-		if self.server_socket:
-			self.server_socket.close()
-			print "Closing server socket"
-		self.bt_is_connected = False
-
-
-
-	def bt_is_connect(self):
-		"""
-		Check status of BT connection
-		"""
-		return self.bt_is_connected
-
-
-	def init_bluetooth(self):
 		"""
 		Connect to Nexus 7
 		RFCOMM port: 4
 		Nexus 7 MAC address: 08:60:6E:A5:82:C8
 		"""
+		self.server_socket = None
+		self.client_socket = None
+		self.bt_is_connected = False
 		btport = 4
 
 		# Creating the server socket and bind to port		
@@ -53,7 +30,31 @@ class AndroidAPI(object):
 		                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 		                   profiles = [ SERIAL_PORT_PROFILE ],
 						)
-		
+
+	def close_bt_socket(self):
+		"""
+		Close socket connections
+		"""
+		if self.client_socket:
+			self.client_socket.close()
+			print "Closing client socket"
+		if self.server_socket:
+			self.server_socket.close()
+			print "Closing server socket"
+		self.bt_is_connected = False
+
+
+	def bt_is_connect(self):
+		"""
+		Check status of BT connection
+		"""
+		return self.bt_is_connected
+
+
+	def connect_bluetooth(self):
+		"""
+		Connect to the Nexus 7 device
+		"""
 		print "Waiting for connection on RFCOMM channel %d" % port
 		# Accept requests
 		self.client_socket, client_address = self.server_socket.accept()
