@@ -28,7 +28,8 @@ class BTThread(threading.Thread):
 		print "quit writeBT"
 		# return send_bt_msg
 
-	# Receives two Qs as arguments and writes (put) to them
+	# Takes two Qs as arguments and writes (put) value read
+	# from BT into them depending on the header
 	def readBT(self, to_pc_q): # Include "to_sr_q" in the args
 		"""
 		Invoke read_from_bt()
@@ -39,8 +40,20 @@ class BTThread(threading.Thread):
 			if len(read_bt_msg) == 0 or read_bt_msg == 'q':
 				print "quitting..."
 				break
-			to_pc_q.put(read_bt_msg) # Strip header here
-			print "Message received from BT: %s. Put in queue" % read_bt_msg
+			
+			# Check header for Destination and strip out first char
+			if (read_bt_msg[0].lower() == 'p'): # send to PC
+				to_pc_q.put(read_bt_msg[1:]) 	# strip header here
+				print "testing pc q: Value written = %s " % read_bt_msg[1:]
+			
+			if (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
+				# to_sr_q.put(read_bt_msg[1:]) 	# strip header here
+				print "testing serial q: Value written = %s " % read_bt_msg[1:]
+			
+			else:
+				print "Incorrect header received from BT"
+			
+			# print "Message received from BT: %s. Put in queue" % read_bt_msg[1:]
 		print "quit readBT"
 
 	def close_all_bt_sockets(self):

@@ -28,7 +28,8 @@ class PCThread(threading.Thread):
 		print "quit writePC"
 		# return send_pc_msg
 
-	# Receives two Qs as arguments and writes (put) to them
+	# Takes two Qs as arguments and writes (put) value read
+	# from PC into them depending on the header
 	def readPC(self, to_bt_q): # Include "to_sr_q" in the args
 		"""
 		Invoke read_from_PC()
@@ -39,8 +40,20 @@ class PCThread(threading.Thread):
 			if len(read_pc_msg) == 0 or read_pc_msg == 'q':
 				print "quitting..."
 				break
-			to_bt_q.put(read_pc_msg) # Strip header here
-			print "Message received from PC %s. Put in queue " %read_pc_msg
+
+		# Check header for Destination and strip out first char
+			if (read_pc_msg[0].lower() == 'a'):	# send to android
+				to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
+				print "testing pc q: Value written = %s " % read_pc_msg[1:]
+
+			if (read_pc_msg[0].lower() == 'h'):
+				# to_sr_q.put(read_pc_msg[1:])	# send to hardware
+				print "testing pc q: Value written = %s " % read_pc_msg[1:]
+
+			else:
+				print "Incorrect header received from PC"
+			
+			# print "Message received from PC %s. Put in queue " %read_pc_msg
 		print "quit readPC"
 
 	def close_all_pc_sockets(self):
