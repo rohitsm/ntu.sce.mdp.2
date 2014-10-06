@@ -30,6 +30,7 @@ class AndroidAPI(object):
 		                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 		                   profiles = [ SERIAL_PORT_PROFILE ],
 						)
+		connect_bluetooth(port)
 
 	def close_bt_socket(self):
 		"""
@@ -51,11 +52,11 @@ class AndroidAPI(object):
 		return self.bt_is_connected
 
 
-	def connect_bluetooth(self):
+	def connect_bluetooth(self, port):
 		"""
 		Connect to the Nexus 7 device
 		"""
-		print "Waiting for connection on RFCOMM channel %d" % port
+		print "Waiting for connection on RFCOMM channel %d" % self.port
 		# Accept requests
 		self.client_socket, client_address = self.server_socket.accept()
 		print "Accepted connection from ", client_address

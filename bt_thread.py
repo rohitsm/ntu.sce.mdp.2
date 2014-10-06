@@ -8,7 +8,7 @@ class BTThread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.bt_api = AndroidAPI()
-		self.bt_api.connect_bluetooth()
+		# self.bt_api.connect_bluetooth()
 
 	def writeBT(self, to_bt_q):
 		"""
