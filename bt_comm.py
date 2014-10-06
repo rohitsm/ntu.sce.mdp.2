@@ -51,7 +51,7 @@ class AndroidAPI(object):
 		return self.bt_is_connected
 
 
-	def connect_bluetooth(self, port):
+	def connect_bluetooth(self):
 		"""
 		Connect to the Nexus 7 device
 		"""
