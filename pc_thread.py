@@ -19,10 +19,10 @@ class PCThread(threading.Thread):
 			while not to_pc_q.empty():
 				send_pc_msg = to_pc_q.get()
 				self.pc_api.write_to_PC(send_pc_msg)
-				if len(send_pc_msg) == 0 or send_pc_msg == 'q':
-					# Send message in anycase and then quit
-					print "quitting..."	
-					break
+				# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
+				# 	# Send message in anycase and then quit
+				# 	print "quitting..."	
+				# 	break
 				print "Writing to PC: %s " % send_pc_msg
 		print "quit writePC"
 		# return send_pc_msg
@@ -36,9 +36,9 @@ class PCThread(threading.Thread):
 		print "Inside readPC:"
 		while True:
 			read_pc_msg = self.pc_api.read_from_PC()
-			if len(read_pc_msg) == 0 or read_pc_msg == 'q':
-				print "quitting..."
-				break
+			# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
+			# 	print "quitting..."
+			# 	break
 
 		# Check header for Destination and strip out first char
 			if (read_pc_msg[0].lower() == 'a'):	# send to android

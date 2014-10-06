@@ -15,16 +15,16 @@ class SRThread(threading.thread):
 		invoke write_to_serial()
 		"""
 		print "Sending text to Arduino: "
-		# while True
-		while not to_sr_q.empty():
-			send_sr_msg = to_sr_q.get()
-			self.sr_api.write_to_serial(send_sr_msg)
-			if len(send_sr_msg) == 0 or send_sr_msg == 'q':
-				# Send message in anycase and then quit
-				print "quitting..."
-				break
-			print "Writing to SR: %s" % send_sr_msg
-		print "quit writeSR"
+		while True
+			while not to_sr_q.empty():
+				send_sr_msg = to_sr_q.get()
+				self.sr_api.write_to_serial(send_sr_msg)
+				# if len(send_sr_msg) == 0 or send_sr_msg == 'q':
+				# 	# Send message in anycase and then quit
+				# 	print "quitting..."
+				# 	break
+				print "Writing to SR: %s" % send_sr_msg
+			print "quit writeSR"
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from SR into them depending on the header
@@ -35,21 +35,21 @@ class SRThread(threading.thread):
 		print "Inside readSR"
 		while True:
 			read_sr_msg = self.sr_api.read_from_serial()
-			if len(read_sr_msg) == 0 or read_sr_msg == 'q':
-				print "quitting..."
-				break
+			# if len(read_sr_msg) == 0 or read_sr_msg == 'q':
+			# 	print "quitting..."
+			# 	break
 
-		# Check header for destination and strip out first char
-		if (read_sr_msg[0].lower() == 'p'): # send to PC
-			to_pc_q.put(read_sr_msg[1:])	# strip header here
-			print "testing pc q: Value written = %s " % read_sr_msg[1:]
+			# Check header for destination and strip out first char
+			if (read_sr_msg[0].lower() == 'p'): # send to PC
+				to_pc_q.put(read_sr_msg[1:])	# strip header here
+				print "testing pc q: Value written = %s " % read_sr_msg[1:]
 
-		elif (read_sr_msg[0].lower() == 'a'):# send to android
-			to_bt_q.put(read_sr_msg[1:])	#strip header here
-			print "testing bt q: value written = %s " % read_sr_msg[1:]
+			elif (read_sr_msg[0].lower() == 'a'):# send to android
+				to_bt_q.put(read_sr_msg[1:])	#strip header here
+				print "testing bt q: value written = %s " % read_sr_msg[1:]
 
-		else:
-			print "Incorrect header received from Arduino"
+			else:
+				print "Incorrect header received from Arduino"
 
 		print "quit readSR"
 

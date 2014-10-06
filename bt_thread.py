@@ -20,10 +20,10 @@ class BTThread(threading.Thread):
 				while not to_bt_q.empty():
 					send_bt_msg = to_bt_q.get()
 					self.bt_api.write_to_bt(send_bt_msg)
-					if len(send_bt_msg) == 0 or send_bt_msg == 'q':
-						# Send message in anycase and then quit
-						print "quitting..."
-						break
+					# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
+					# 	# Send message in anycase and then quit
+					# 	print "quitting..."
+					# 	break
 					print "Writing to BT: %s" % send_bt_msg
 			except BluetoothError:
 				print "Bluetooth Error. Connection reset by peer"
@@ -41,9 +41,9 @@ class BTThread(threading.Thread):
 		print "readBT: to_pc_q = %s " %to_pc_q
 		while True:
 			read_bt_msg = self.bt_api.read_from_bt()
-			if len(read_bt_msg) == 0 or read_bt_msg == 'q':
-				print "quitting..."
-				break
+			# if len(read_bt_msg) == 0 or read_bt_msg == 'q':
+			# 	print "quitting..."
+			# 	break
 			
 			# Check header for Destination and strip out first char
 			if (read_bt_msg[0].lower() == 'p'): # send to PC

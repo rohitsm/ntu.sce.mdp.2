@@ -1,3 +1,4 @@
+import sys
 import Queue
 import threading
 from pc_thread import *
@@ -46,6 +47,16 @@ if __name__ == "__main__":
 	# rt_sr.start()
 	# wt_sr.start()
 	print "start rt and wt"
+
+	print "Enter 'exit' to quit"
+	exit_msg = raw_input()
+	while True:
+		if (exit_msg.lower() == "exit"):
+			print "Enter 'exit' to quit"
+			sys.exit()
+		print "Enter 'exit' to quit"
+		exit_msg = raw_input()
+
 
 	# Handle the joins
 	rt_pc.join()
