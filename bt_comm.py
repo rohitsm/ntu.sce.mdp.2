@@ -79,8 +79,8 @@ class AndroidAPI(object):
 		"""
 		# while self.bt_is_connect():
 		msg = self.client_socket.recv(1024)
-		# print "Received [%s] " % msg
-		# return msg
+		print "Received [%s] " % msg
+		return msg
 
 
 # if __name__ == "__main__":
