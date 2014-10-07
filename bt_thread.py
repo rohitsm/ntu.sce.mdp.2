@@ -30,6 +30,7 @@ class BTThread(threading.Thread):
 				self.bt_api.connect_bluetooth()
 				continue
 		print "quit writeBT"
+		# return True
 		# return send_bt_msg
 
 	# Takes two Qs as arguments and writes (put) value read
@@ -59,6 +60,7 @@ class BTThread(threading.Thread):
 			
 			# print "Message received from BT: %s. Put in queue" % read_bt_msg[1:]
 		print "quit readBT"
+		# return True
 
 	def close_all_bt_sockets(self):
 		self.bt_api.close_bt_socket()

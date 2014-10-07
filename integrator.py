@@ -12,7 +12,6 @@ to_bt = Queue.Queue()
 to_pc = Queue.Queue()
 # to_sr = Queue.Queue()		// Serial queue
 
-
 if __name__ == "__main__":
 	pc_thread = PCThread()
 	bt_thread = BTThread()
@@ -53,17 +52,9 @@ if __name__ == "__main__":
 	exit_msg = raw_input()
 	while True:
 		if (exit_msg == "exit"):
-			# Close all the sockets and then exit
-			pc_thread.close_all_pc_sockets()
-			bt_thread.close_all_bt_sockets()
-			# sr_thread.close_all_sr_sockets()
-
-
 			quit()
-
 			print "after quit"
 			sys.exit()
-			
 		print "Enter 'exit' to quit"
 		exit_msg = raw_input()
 
