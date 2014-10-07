@@ -15,20 +15,20 @@ class BTThread(threading.Thread):
 		Invoke write_to_bt()
 		"""
 		print "Sending text to Andorid: "
-		while True:
+		# while True:
 		# 	try:
-			while not to_bt_q.empty():
-				send_bt_msg = to_bt_q.get()
-				self.bt_api.write_to_bt(send_bt_msg)
-				# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
-				# 	# Send message in anycase and then quit
-				# 	print "quitting..."
-				# 	break
-				print "Writing to BT: %s" % send_bt_msg
-			# except BluetoothError:
-			# 	print "Bluetooth Error. Connection reset by peer"
-			# 	self.bt_api.connect_bluetooth()
-			# 	continue
+		while not to_bt_q.empty():
+			send_bt_msg = to_bt_q.get()
+			self.bt_api.write_to_bt(send_bt_msg)
+			# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
+			# 	# Send message in anycase and then quit
+			# 	print "quitting..."
+			# 	break
+			print "Writing to BT: %s" % send_bt_msg
+		# except BluetoothError:
+		# 	print "Bluetooth Error. Connection reset by peer"
+		# 	self.bt_api.connect_bluetooth()
+		# 	continue
 		print "quit writeBT"
 		# return True
 		# return send_bt_msg
