@@ -16,7 +16,7 @@ class SRThread(threading.thread):
 		invoke write_to_serial()
 		"""
 		print "Sending text to Arduino: "
-		while True
+		while True:
 			while not to_sr_q.empty():
 				send_sr_msg = to_sr_q.get()
 				self.sr_api.write_to_serial(send_sr_msg)

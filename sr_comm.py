@@ -4,7 +4,6 @@ import time
 __author__ = "Rohit"
 
 class SerialAPI(object):
-
 	def __init__(self):
 		self.port = '/dev/ttyACM0'
 		self.baud_rate = 9600
@@ -43,20 +42,20 @@ class SerialAPI(object):
 		return received_data
 
 
-if __name__ == "__main__":
-	print "Running Main"
-	sr = SerialAPI()
-	sr.connect_serial()
-	print "serial connection successful"
+# if __name__ == "__main__":
+# 	print "Running Main"
+# 	sr = SerialAPI()
+# 	sr.connect_serial()
+# 	print "serial connection successful"
 
-	send_msg = raw_input()
-	print "Writing [%s] to arduino" % send_msg
-	sr.write_to_serial(send_msg)
+# 	send_msg = raw_input()
+# 	print "Writing [%s] to arduino" % send_msg
+# 	sr.write_to_serial(send_msg)
 
-	print "read"
-	print "data received from serial" % sr.read_from_serial
+# 	print "read"
+# 	print "data received from serial" % sr.read_from_serial
 
-	print "closing sockets"
-	sr.close_sr_socket()
+# 	print "closing sockets"
+# 	sr.close_sr_socket()
 
 
