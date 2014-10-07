@@ -15,15 +15,15 @@ class PCThread(threading.Thread):
 		Invoke write_to_PC()
 		"""
 		print "Sending to PC: "
-		# while True:
-		while not to_pc_q.empty():
-			send_pc_msg = to_pc_q.get()
-			self.pc_api.write_to_PC(send_pc_msg)
-			# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
-			# 	# Send message in anycase and then quit
-			# 	print "quitting..."	
-			# 	break
-			print "Writing to PC: %s " % send_pc_msg
+		while True:
+			while not to_pc_q.empty():
+				send_pc_msg = to_pc_q.get()
+				self.pc_api.write_to_PC(send_pc_msg)
+				# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
+				# 	# Send message in anycase and then quit
+				# 	print "quitting..."	
+				# 	break
+				print "Writing to PC: %s " % send_pc_msg
 		print "quit writePC"
 		# return send_pc_msg
 
