@@ -18,7 +18,8 @@ class BTThread(threading.Thread):
 		print "Sending text to Andorid: "
 		while True:
 			if (not to_bt_q.empty()):
-				send_bt_msg = to_bt_q.popleft()
+				send_bt_msg = to_bt_q.get()
+				print "QSIZE: ", to_bt_q.qsize()
 				self.bt_api.write_to_bt(send_bt_msg)
 				# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
 				# 	# Send message in anycase and then quit

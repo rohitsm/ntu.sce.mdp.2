@@ -18,7 +18,7 @@ class PCThread(threading.Thread):
 		print "Sending to PC: "
 		while True:
 			if (not to_pc_q.empty()):
-				send_pc_msg = to_pc_q.popleft()
+				send_pc_msg = to_pc_q.get()
 				self.pc_api.write_to_PC(send_pc_msg)
 				# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
 				# 	# Send message in anycase and then quit
