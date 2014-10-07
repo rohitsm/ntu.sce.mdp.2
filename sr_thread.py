@@ -17,13 +17,11 @@ class SRThread(threading.Thread):
 		"""
 		print "Sending text to Arduino: "
 		while True:
-			while not to_sr_q.empty():
+			if (not to_sr_q.empty()):
 				send_sr_msg = to_sr_q.get()
 				self.sr_api.write_to_serial(send_sr_msg)
-				
 				print "Writing to SR: %s" % send_sr_msg
 				time.sleep(0.5)
-			# print "quit writeSR"
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from SR into them depending on the header
@@ -47,7 +45,6 @@ class SRThread(threading.Thread):
 			else:
 				print "Incorrect header received from Arduino"
 
-		print "quit readSR"
 
 	def close_all_sr_sockets(self):
 		"""

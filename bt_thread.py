@@ -19,7 +19,6 @@ class BTThread(threading.Thread):
 		while True:
 			if (not to_bt_q.empty()):
 				send_bt_msg = to_bt_q.get()
-				print "QSIZE: ", to_bt_q.qsize()
 				self.bt_api.write_to_bt(send_bt_msg)
 				print "Writing to BT: %s" % send_bt_msg
 			time.sleep(0.2)
