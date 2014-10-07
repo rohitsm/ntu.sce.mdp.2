@@ -47,7 +47,8 @@ class PCThread(threading.Thread):
 				# Check header for Destination and strip out first char
 				if (read_pc_msg[0].lower() == 'a'):	# send to android
 					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
-					print "testing pc q: Value written = %s " % read_pc_msg[1:]
+					print "(inside readPC) QSIZE of to_bt_q = ", to_bt_q.qsize()
+					# print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
 				elif (read_pc_msg[0].lower() == 'h'):
 					# to_sr_q.put(read_pc_msg[1:])	# send to hardware

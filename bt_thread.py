@@ -26,7 +26,7 @@ class BTThread(threading.Thread):
 				# 	print "quitting..."
 				# 	break
 				print "Writing to BT: %s" % send_bt_msg
-			time.sleep(0.2)
+			time.sleep(2)
 		
 		# print "quit writeBT"
 		# return True
