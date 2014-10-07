@@ -35,24 +35,28 @@ class PCThread(threading.Thread):
 		"""
 		print "Inside readPC:"
 		while True:
-			read_pc_msg = self.pc_api.read_from_PC()
-			# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
-			# 	print "quitting..."
-			# 	break
+			try:
+				read_pc_msg = self.pc_api.read_from_PC()
+				# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
+				# 	print "quitting..."
+				# 	break
 
-		# Check header for Destination and strip out first char
-			if (read_pc_msg[0].lower() == 'a'):	# send to android
-				to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
-				print "testing pc q: Value written = %s " % read_pc_msg[1:]
+				# Check header for Destination and strip out first char
+				if (read_pc_msg[0].lower() == 'a'):	# send to android
+					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
+					print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
-			elif (read_pc_msg[0].lower() == 'h'):
-				# to_sr_q.put(read_pc_msg[1:])	# send to hardware
-				print "testing pc q: Value written = %s " % read_pc_msg[1:]
+				elif (read_pc_msg[0].lower() == 'h'):
+					# to_sr_q.put(read_pc_msg[1:])	# send to hardware
+					print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
-			else:
-				print "Incorrect header received from PC"
+				else:
+					print "Incorrect header received from PC"
 			
-			# print "Message received from PC %s. Put in queue " %read_pc_msg
+			except IndexError:
+				print "Incorrect header format"
+				continue
+				# print "Message received from PC %s. Put in queue " %read_pc_msg
 		print "quit readPC"
 
 	def close_all_pc_sockets(self):

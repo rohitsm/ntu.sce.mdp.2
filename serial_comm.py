@@ -15,6 +15,7 @@ class SerialAPI(object):
 		Initialize serial socket
 		"""
 		self.ser = serial.Serial(self.port, self.baud_rate)
+		print "Serial link connected"
 
 
 	def close_sr_socket(self):
@@ -46,6 +47,7 @@ if __name__ == "__main__":
 	print "Running Main"
 	sr = SerialAPI()
 	sr.connect_serial()
+	print "serial connection successful"
 
 	send_msg = raw_input()
 	print "Writing [%s] to arduino" % send_msg
