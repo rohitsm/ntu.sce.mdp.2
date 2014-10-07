@@ -71,7 +71,7 @@ class AndroidAPI(object):
 				self.client_socket.send(str(message))
 			except BluetoothError:
 				print "Bluetooth Error. Connection reset by peer"
-				connect_bluetooth()	# Reestablish connection
+				self.connect_bluetooth()	# Reestablish connection
 				continue
 		# print "Send to Android: %s " % message
 		# return True
@@ -89,7 +89,7 @@ class AndroidAPI(object):
 				return msg
 			except BluetoothError:
 				print "Bluetooth Error. Connection reset by peer. Trying to connect"
-				connect_bluetooth()	# Reestablish connection
+				self.connect_bluetooth()	# Reestablish connection
 				continue
 		# return msg
 
