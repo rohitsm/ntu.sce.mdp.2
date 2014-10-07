@@ -51,7 +51,8 @@ class PCThread(threading.Thread):
 					print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
 				else:
-					print "Incorrect header received from PC"
+					print "Incorrect header received from PC: [%s] " %read_pc_msg[0]
+
 			
 			except IndexError:
 				print "Incorrect header format"
