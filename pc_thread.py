@@ -40,6 +40,7 @@ class PCThread(threading.Thread):
 				# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
 				# 	print "quitting..."
 				# 	break
+				print "Value received  from PC: %s " % read_pc_msg
 
 				# Check header for Destination and strip out first char
 				if (read_pc_msg[0].lower() == 'a'):	# send to android

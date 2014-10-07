@@ -48,15 +48,15 @@ if __name__ == "__main__":
 	# wt_sr.start()
 	print "start rt and wt"
 
-	print "Enter 'exit' to quit"
-	exit_msg = raw_input()
-	while True:
-		if (exit_msg == "exit"):
-			quit()
-			print "after quit"
-			sys.exit()
-		print "Enter 'exit' to quit"
-		exit_msg = raw_input()
+	# print "Enter 'exit' to quit"
+	# exit_msg = raw_input()
+	# while True:
+	# 	if (exit_msg == "exit"):
+	# 		quit()
+	# 		print "after quit"
+	# 		sys.exit()
+	# 	print "Enter 'exit' to quit"
+	# 	exit_msg = raw_input()
 
 
 	# Handle the joins
