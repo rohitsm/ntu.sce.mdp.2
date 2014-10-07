@@ -9,7 +9,7 @@ __author__ = "Rohit"
 
 
 ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5174
+port = 5178
 # message = "Hello World!"
 message = list(string.ascii_lowercase)
 
@@ -27,13 +27,9 @@ def write(count = 0):
 		# if (count == 1):
 		# 	break
 		client_socket.send(msg)
-		# if len(msg) == 0 or msg == 'q':
-		# 	# Send message in anycase and then quit
-		# 	print "quitting..."
-		# 	break
 		print "sending: ", msg
-		print "Enter text to send: "
-		msg = raw_input()
+		# print "Enter text to send: "
+		msg = raw_input("Enter a value:")
 		count += 1
 	print "quit write()"
 

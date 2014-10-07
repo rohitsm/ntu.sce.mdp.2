@@ -66,13 +66,12 @@ class AndroidAPI(object):
 		"""
 		Write message to Nexus
 		"""
-		while True:
-			try:
-				self.client_socket.send(str(message))
-			except BluetoothError:
-				print "Bluetooth Error. Connection reset by peer"
-				self.connect_bluetooth()	# Reestablish connection
-				continue
+		try:
+			self.client_socket.send(str(message))
+		except BluetoothError:
+			print "Bluetooth Error. Connection reset by peer"
+			self.connect_bluetooth()	# Reestablish connection
+			continue
 		# print "Send to Android: %s " % message
 		# return True
 
