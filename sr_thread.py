@@ -5,10 +5,10 @@ from sr_comm import *
 
 __author__ = "Rohit"
 
-class SRThread(threading.thread):
+class SRThread(threading.Thread):
 	def __init__(self):
-		threading.thread.__init__(self)
-		self.sr_api = SRThread()
+		threading.Thread.__init__(self)
+		self.sr_api = SerialAPI()
 		self.sr_api.connect_serial()
 
 	def writeSR(self, to_sr_q):
