@@ -1,3 +1,4 @@
+import time
 import threading
 import Queue
 from bt_comm import *
@@ -15,21 +16,16 @@ class BTThread(threading.Thread):
 		Invoke write_to_bt()
 		"""
 		print "Sending text to Andorid: "
-		# while True:
-		# 	try:
-		if (not to_bt_q.empty()):
-			send_bt_msg = to_bt_q.get()
-			print "Size of queue 'to_bt_q': ", to_bt_q.qsize()
-			self.bt_api.write_to_bt(send_bt_msg)
-			# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
-			# 	# Send message in anycase and then quit
-			# 	print "quitting..."
-			# 	break
-			print "Writing to BT: %s" % send_bt_msg
-		# except BluetoothError:
-		# 	print "Bluetooth Error. Connection reset by peer"
-		# 	self.bt_api.connect_bluetooth()
-		pass
+		while True:
+			if (not to_bt_q.empty()):
+				send_bt_msg = to_bt_q.get()
+				self.bt_api.write_to_bt(send_bt_msg)
+				# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
+				# 	# Send message in anycase and then quit
+				# 	print "quitting..."
+				# 	break
+				print "Writing to BT: %s" % send_bt_msg
+			time.sleep(0.2)
 		
 		# print "quit writeBT"
 		# return True
@@ -42,7 +38,7 @@ class BTThread(threading.Thread):
 		Invoke read_from_bt()
 		"""
 		print "readBT: to_pc_q = %s " %to_pc_q
-		# while True:
+		while True:
 			read_bt_msg = self.bt_api.read_from_bt()
 			# if len(read_bt_msg) == 0 or read_bt_msg == 'q':
 			# 	print "quitting..."
@@ -60,10 +56,10 @@ class BTThread(threading.Thread):
 			else:
 				print "Incorrect header received from BT"
 			
-			# print "Message received from BT: %s. Put in queue" % read_bt_msg[1:]
-		pass
-		# print "quit readBT"
-		# return True
+				# print "Message received from BT: %s. Put in queue" % read_bt_msg[1:]
+		
+			# print "quit readBT"
+			# return True
 
 	def close_all_bt_sockets(self):
 		self.bt_api.close_bt_socket()
