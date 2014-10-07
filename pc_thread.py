@@ -15,16 +15,17 @@ class PCThread(threading.Thread):
 		Invoke write_to_PC()
 		"""
 		print "Sending to PC: "
-		while True:
-			while not to_pc_q.empty():
-				send_pc_msg = to_pc_q.get()
-				self.pc_api.write_to_PC(send_pc_msg)
-				# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
-				# 	# Send message in anycase and then quit
-				# 	print "quitting..."	
-				# 	break
-				print "Writing to PC: %s " % send_pc_msg
-		print "quit writePC"
+		# while True:
+		if (not to_pc_q.empty()):
+			send_pc_msg = to_pc_q.get()
+			self.pc_api.write_to_PC(send_pc_msg)
+			# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
+			# 	# Send message in anycase and then quit
+			# 	print "quitting..."	
+			# 	break
+			print "Writing to PC: %s " % send_pc_msg
+		continue
+		# print "quit writePC"
 		# return send_pc_msg
 
 	# Takes two Qs as arguments and writes (put) value read
@@ -34,32 +35,32 @@ class PCThread(threading.Thread):
 		Invoke read_from_PC()
 		"""
 		print "Inside readPC:"
-		while True:
-			try:
-				read_pc_msg = self.pc_api.read_from_PC()
-				# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
-				# 	print "quitting..."
-				# 	break
-				print "Value received  from PC: %s " % read_pc_msg
+		# while True:
+		try:
+			read_pc_msg = self.pc_api.read_from_PC()
+			# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
+			# 	print "quitting..."
+			# 	break
+			print "Value received  from PC: %s " % read_pc_msg
 
-				# Check header for Destination and strip out first char
-				if (read_pc_msg[0].lower() == 'a'):	# send to android
-					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
-					print "testing pc q: Value written = %s " % read_pc_msg[1:]
+			# Check header for Destination and strip out first char
+			if (read_pc_msg[0].lower() == 'a'):	# send to android
+				to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
+				print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
-				elif (read_pc_msg[0].lower() == 'h'):
-					# to_sr_q.put(read_pc_msg[1:])	# send to hardware
-					print "testing pc q: Value written = %s " % read_pc_msg[1:]
+			elif (read_pc_msg[0].lower() == 'h'):
+				# to_sr_q.put(read_pc_msg[1:])	# send to hardware
+				print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
-				else:
-					print "Incorrect header received from PC: [%s] " %read_pc_msg[0]
+			else:
+				print "Incorrect header received from PC: [%s] " %read_pc_msg[0]
 
-			
-			except IndexError:
-				print "Incorrect header format"
-				continue
-				# print "Message received from PC %s. Put in queue " %read_pc_msg
-		print "quit readPC"
+		except IndexError:
+			print "Incorrect header format"
+			continue
+			# print "Message received from PC %s. Put in queue " %read_pc_msg
+		continue	
+		# print "quit readPC"
 
 	def close_all_pc_sockets(self):
 		self.pc_api.close_pc_socket()
