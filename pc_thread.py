@@ -24,7 +24,7 @@ class PCThread(threading.Thread):
 			# 	print "quitting..."	
 			# 	break
 			print "Writing to PC: %s " % send_pc_msg
-		continue
+		pass
 		# print "quit writePC"
 		# return send_pc_msg
 
@@ -59,7 +59,7 @@ class PCThread(threading.Thread):
 			print "Incorrect header format"
 			continue
 			# print "Message received from PC %s. Put in queue " %read_pc_msg
-		continue	
+		pass	
 		# print "quit readPC"
 
 	def close_all_pc_sockets(self):

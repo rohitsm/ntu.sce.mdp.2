@@ -29,7 +29,7 @@ class BTThread(threading.Thread):
 		# except BluetoothError:
 		# 	print "Bluetooth Error. Connection reset by peer"
 		# 	self.bt_api.connect_bluetooth()
-		continue
+		pass
 		
 		# print "quit writeBT"
 		# return True
@@ -61,7 +61,7 @@ class BTThread(threading.Thread):
 				print "Incorrect header received from BT"
 			
 			# print "Message received from BT: %s. Put in queue" % read_bt_msg[1:]
-		continue
+		pass
 		# print "quit readBT"
 		# return True
 
