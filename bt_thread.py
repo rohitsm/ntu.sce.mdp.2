@@ -19,6 +19,7 @@ class BTThread(threading.Thread):
 		# 	try:
 			while not to_bt_q.empty():
 				send_bt_msg = to_bt_q.get()
+				print "Size of queue 'to_bt_q': ", to_bt_q.qsize()
 				self.bt_api.write_to_bt(send_bt_msg)
 				# if len(send_bt_msg) == 0 or send_bt_msg == 'q':
 				# 	# Send message in anycase and then quit
