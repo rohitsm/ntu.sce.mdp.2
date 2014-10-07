@@ -20,18 +20,13 @@ class PCThread(threading.Thread):
 			if (not to_pc_q.empty()):
 				send_pc_msg = to_pc_q.get()
 				self.pc_api.write_to_PC(send_pc_msg)
-				# if len(send_pc_msg) == 0 or send_pc_msg == 'q':
-				# 	# Send message in anycase and then quit
-				# 	print "quitting..."	
-				# 	break
+				
 				print "Writing to PC: %s " % send_pc_msg
-				time.sleep(0.2)
-		# print "quit writePC"
-		# return send_pc_msg
+			time.sleep(0.2)
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from PC into them depending on the header
-	def readPC(self, to_bt_q): # Include "to_sr_q" in the args
+	def readPC(self, to_bt_q, to_sr_q): # Include "to_sr_q" in the args
 		"""
 		Invoke read_from_PC()
 		"""
@@ -39,9 +34,6 @@ class PCThread(threading.Thread):
 		while True:
 			try:
 				read_pc_msg = self.pc_api.read_from_PC()
-				# if len(read_pc_msg) == 0 or read_pc_msg == 'q':
-				# 	print "quitting..."
-				# 	break
 				print "Value received  from PC: %s " % read_pc_msg
 
 				# Check header for Destination and strip out first char
@@ -51,7 +43,7 @@ class PCThread(threading.Thread):
 					# print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
 				elif (read_pc_msg[0].lower() == 'h'):
-					# to_sr_q.put(read_pc_msg[1:])	# send to hardware
+					to_sr_q.put(read_pc_msg[1:])	# send to hardware
 					print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
 				else:
@@ -60,9 +52,7 @@ class PCThread(threading.Thread):
 			except IndexError:
 				print "Incorrect header format"
 				pass
-				# print "Message received from PC %s. Put in queue " %read_pc_msg	
-			# print "quit readPC"
-
+				
 	def close_all_pc_sockets(self):
 		self.pc_api.close_pc_socket()
 

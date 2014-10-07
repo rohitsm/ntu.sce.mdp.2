@@ -71,15 +71,12 @@ class AndroidAPI(object):
 		except BluetoothError:
 			print "Bluetooth Error. Connection reset by peer"
 			self.connect_bluetooth()	# Reestablish connection
-		# print "Send to Android: %s " % message
-		# return True
 
 			
 	def read_from_bt(self):
 		"""
 		Read incoming message from Nexus
 		"""
-		# while self.bt_is_connect():
 		try:
 			msg = self.client_socket.recv(1024)
 			print "Received [%s] " % msg
@@ -87,9 +84,6 @@ class AndroidAPI(object):
 		except BluetoothError:
 			print "Bluetooth Error. Connection reset by peer. Trying to connect"
 			self.connect_bluetooth()	# Reestablish connection
-		
-		# return msg
-
 
 # if __name__ == "__main__":
 # 	print "Running Main"

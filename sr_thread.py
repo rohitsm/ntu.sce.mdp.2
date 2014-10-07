@@ -1,6 +1,7 @@
+import time
 import threading
 import serial
-from serial_comm import *
+from sr_comm import *
 
 __author__ = "Rohit"
 
@@ -19,12 +20,10 @@ class SRThread(threading.thread):
 			while not to_sr_q.empty():
 				send_sr_msg = to_sr_q.get()
 				self.sr_api.write_to_serial(send_sr_msg)
-				# if len(send_sr_msg) == 0 or send_sr_msg == 'q':
-				# 	# Send message in anycase and then quit
-				# 	print "quitting..."
-				# 	break
+				
 				print "Writing to SR: %s" % send_sr_msg
-			print "quit writeSR"
+				time.sleep(0.5)
+			# print "quit writeSR"
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from SR into them depending on the header
@@ -35,10 +34,7 @@ class SRThread(threading.thread):
 		print "Inside readSR"
 		while True:
 			read_sr_msg = self.sr_api.read_from_serial()
-			# if len(read_sr_msg) == 0 or read_sr_msg == 'q':
-			# 	print "quitting..."
-			# 	break
-
+			
 			# Check header for destination and strip out first char
 			if (read_sr_msg[0].lower() == 'p'): # send to PC
 				to_pc_q.put(read_sr_msg[1:])	# strip header here

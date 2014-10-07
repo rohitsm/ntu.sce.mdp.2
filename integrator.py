@@ -31,10 +31,10 @@ if __name__ == "__main__":
 
 
 	# Serial (SR) read and write thread
-	# rt_sr = threading.Thread(target = sr_thread.readSR, args = (to_pc, to_bt,), name = "sr_read_thread")
-	# print "created rt_sr"
-	# wt_sr = threading.Thread(target = sr_thread.writeSR, args = (to_sr,), name = "sr_write_thread")
-	# print "created wt_sr"
+	rt_sr = threading.Thread(target = sr_thread.readSR, args = (to_pc, to_bt,), name = "sr_read_thread")
+	print "created rt_sr"
+	wt_sr = threading.Thread(target = sr_thread.writeSR, args = (to_sr,), name = "sr_write_thread")
+	print "created wt_sr"
 
 
 	# Start Threads
@@ -44,20 +44,10 @@ if __name__ == "__main__":
 	rt_bt.start()
 	wt_bt.start()
 
-	# rt_sr.start()
-	# wt_sr.start()
+	rt_sr.start()
+	wt_sr.start()
+	
 	print "start rt and wt"
-
-	# print "Enter 'exit' to quit"
-	# exit_msg = raw_input()
-	# while True:
-	# 	if (exit_msg == "exit"):
-	# 		quit()
-	# 		print "after quit"
-	# 		sys.exit()
-	# 	print "Enter 'exit' to quit"
-	# 	exit_msg = raw_input()
-
 
 	# Handle the joins
 	rt_pc.join()
@@ -66,12 +56,13 @@ if __name__ == "__main__":
 	rt_bt.join()
 	wt_bt.join()
 
-	# rt_sr.join())
-	# wt_sr.join()
+	rt_sr.join())
+	wt_sr.join()
 
 	print "end of joins"
 
 	pc_thread.close_all_pc_sockets()
 	bt_thread.close_all_bt_sockets()
-	# sr_thread.close_all_sr_sockets()
+	sr_thread.close_all_sr_sockets()
+	
 	print "End thread"

@@ -48,27 +48,14 @@ class PcAPI(object):
 		"""
 		Write message to PC
 		"""
-		# while self.pc_is_connected():
-		# while True:
-		# if len(message) == 0:
-		# 	break
-
 		self.client.sendto(message, self.addr)
-		# print "Send to PC: %s " % message
+	
 
 	def read_from_PC(self):
 		"""
 		Read incoming message from PC
 		"""
-		# while self.pc_is_connected():
-		# while True
-
 		pc_data = self.client.recv(1024)
-
-		# if len(pc_data) == 0 or pc_data == 'q':
-		# 	break
-
-		# print "Data received: %s" % pc_data
 		return pc_data
 
 # if __name__ == "__main__":
