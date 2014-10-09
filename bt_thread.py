@@ -17,8 +17,8 @@ class BTThread(threading.Thread):
 		Invoke write_to_bt()
 		"""
 		time.sleep(0.2)
+		print "inside writeBT: "
 		while True:
-			print "inside writeBT: "
 			# bt_q_lock.acquire()		# Lock the queue
 			if (not to_bt_q.empty()):
 				send_bt_msg = to_bt_q.get()
