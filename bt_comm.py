@@ -16,23 +16,6 @@ class AndroidAPI(object):
 		self.server_socket = None
 		self.client_socket = None
 		self.bt_is_connected = False
-		btport = 4
-
-		# Creating the server socket and bind to port		
-		try:
-			self.server_socket = BluetoothSocket( RFCOMM )
-			self.server_socket.bind(("", btport))
-			self.server_socket.listen(1)	# Listen for requests
-			self.port = self.server_socket.getsockname()[1]
-			uuid = "00001101-0000-1000-8000-00805F9B34FB"
-
-			advertise_service( self.server_socket, "SampleServer",
-			                   service_id = uuid,
-			                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
-			                   profiles = [ SERIAL_PORT_PROFILE ],
-							)
-		except _bluetooth.error:
-
 
 	def close_bt_socket(self):
 		"""
@@ -59,6 +42,7 @@ class AndroidAPI(object):
 		Connect to the Nexus 7 device
 		"""
 		# Creating the server socket and bind to port		
+		btport = 4
 		try:
 			self.server_socket = BluetoothSocket( RFCOMM )
 			self.server_socket.bind(("", btport))
