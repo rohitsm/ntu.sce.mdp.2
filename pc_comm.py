@@ -46,7 +46,7 @@ class PcAPI(object):
 			self.pc_is_connect = True
 		except Exception, e: 	#socket.error:
 			print "Error: %s" % str(e)
-			self.close_pc_socket()
+			# self.close_pc_socket()
 
 
 	def write_to_PC(self, message):
@@ -61,7 +61,7 @@ class PcAPI(object):
 		"""
 		Read incoming message from PC
 		"""
-		pc_data = self.client.recv(1024)
+		pc_data = self.client.recv(2048)
 		print "Read [%s] from PC" %pc_data
 		return pc_data
 
