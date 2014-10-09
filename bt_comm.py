@@ -58,8 +58,8 @@ class AndroidAPI(object):
 			print "Accepted connection from ", client_address
 			self.bt_is_connected = True
 
-		except _bluetooth.error:
-			print "Error address already in use"
+		except Exception, e:
+			print "Error: %s" %str(e)
 			self.close_bt_socket()
 			pass
 
