@@ -61,7 +61,7 @@ class AndroidAPI(object):
 		except _bluetooth.error:
 			print "Error address already in use"
 			self.close_bt_socket()
-			self.connect_bluetooth()
+			pass
 
 
 	def write_to_bt(self, message):

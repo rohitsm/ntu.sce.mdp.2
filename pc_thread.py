@@ -47,7 +47,7 @@ class PCThread(threading.Thread):
 					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
 					pc_q_lock.release()		# Release the lock
 					# print "(inside readPC) QSIZE of to_bt_q = ", to_bt_q.qsize()
-					print "testing pc q: Value written = %s " % read_pc_msg[1:]
+					print "testing bt q: Value written = %s " % read_pc_msg[1:]
 
 				elif (read_pc_msg[0].lower() == 'h'):
 					to_sr_q.put(read_pc_msg[1:])	# send to hardware
