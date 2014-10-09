@@ -34,7 +34,7 @@ class BTThread(threading.Thread):
 		Invoke read_from_bt()
 		"""
 		# time.sleep(0.2)	# Delay before reading
-		print "readBT: to_pc_q = %s " %to_pc_q
+		print "inside readBT: "
 		while True:
 			try:				
 				# bt_q_lock.acquire()		# Lock the queue

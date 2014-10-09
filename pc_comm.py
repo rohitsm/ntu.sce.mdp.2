@@ -44,9 +44,9 @@ class PcAPI(object):
 			self.client, self.addr = self.conn.accept()
 			print "Connected! Connection address: ", self.addr
 			self.pc_is_connect = True
-		except socket.error:
+		except Exception, e: 	#socket.error:
+			print "Error: %s" % str(e)
 			self.close_pc_socket()
-			pass
 
 
 	def write_to_PC(self, message):

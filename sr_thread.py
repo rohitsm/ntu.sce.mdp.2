@@ -19,7 +19,7 @@ class SRThread(threading.Thread):
 		invoke write_to_serial()
 		"""
 		time.sleep(0.2)
-		print "Sending text to Arduino: "
+		print "inside writeSR: "
 		while True:
 			# sr_q_lock.acquire()		# Lock the thread
 			if (not to_sr_q.empty()):

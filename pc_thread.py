@@ -17,7 +17,7 @@ class PCThread(threading.Thread):
 		Invoke write_to_PC()
 		"""
 		time.sleep(0.2)
-		print "Sending to PC: "
+		print "writePC: "
 		while True:
 			# pc_q_lock.acquire()		# Lock the thread
 			if (not to_pc_q.empty()):
