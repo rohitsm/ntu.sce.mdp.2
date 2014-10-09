@@ -39,7 +39,7 @@ class BTThread(threading.Thread):
 			try:				
 				# bt_q_lock.acquire()		# Lock the queue
 				read_bt_msg = self.bt_api.read_from_bt()
-					
+									
 				# Check header for Destination and strip out first char
 				if (read_bt_msg[0].lower() == 'p'): # send to PC
 					to_pc_q.put(read_bt_msg[1:]) 	# strip header here

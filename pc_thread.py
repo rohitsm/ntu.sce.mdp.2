@@ -19,13 +19,13 @@ class PCThread(threading.Thread):
 		time.sleep(0.2)
 		print "Sending to PC: "
 		while True:
-			pc_q_lock.acquire()		# Lock the thread
+			# pc_q_lock.acquire()		# Lock the thread
 			if (not to_pc_q.empty()):
 				send_pc_msg = to_pc_q.get()
 				self.pc_api.write_to_PC(send_pc_msg)
 				print "Writing to PC: %s " % send_pc_msg
 				# time.sleep(0.2)
-			pc_q_lock.release()		# Release the lock
+			# pc_q_lock.release()		# Release the lock
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from PC into them depending on the header
