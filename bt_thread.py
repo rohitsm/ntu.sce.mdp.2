@@ -37,13 +37,13 @@ class BTThread(threading.Thread):
 		print "readBT: to_pc_q = %s " %to_pc_q
 		while True:
 			try:				
-				bt_q_lock.acquire()		# Lock the queue
+				# bt_q_lock.acquire()		# Lock the queue
 				read_bt_msg = self.bt_api.read_from_bt()
 					
 				# Check header for Destination and strip out first char
 				if (read_bt_msg[0].lower() == 'p'): # send to PC
 					to_pc_q.put(read_bt_msg[1:]) 	# strip header here
-					bt_q_lock.release()	# Release the lock
+					# bt_q_lock.release()	# Release the lock
 					print "testing pc q: Value written = %s " % read_bt_msg[1:]
 				
 				# elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
@@ -51,11 +51,11 @@ class BTThread(threading.Thread):
 				# 	print "testing serial q: Value written = %s " % read_bt_msg[1:]
 				
 				else:
-					bt_q_lock.release()	# Release the lock
+					# bt_q_lock.release()	# Release the lock
 					print "Incorrect header received from BT: [%s]" %read_bt_msg[0]
 			except TypeError:
 				time.sleep(0.5)	# Sleep with the hope that item arrives
-				bt_q_lock.release()	# Release the lock
+				# bt_q_lock.release()	# Release the lock
 				print "bt_q is empty"
 
 
