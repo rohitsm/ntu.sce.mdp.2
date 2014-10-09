@@ -29,6 +29,7 @@ class BTThread(threading.Thread):
 		"""
 		Invoke read_from_bt()
 		"""
+		time.sleep(0.5)	# Delay before reading
 		print "readBT: to_pc_q = %s " %to_pc_q
 		while True:
 			read_bt_msg = self.bt_api.read_from_bt()
@@ -43,7 +44,7 @@ class BTThread(threading.Thread):
 				print "testing serial q: Value written = %s " % read_bt_msg[1:]
 			
 			else:
-				print "Incorrect header received from BT"
+				print "Incorrect header received from BT: [%s]" %read_bt_msg[0]
 			
 	def close_all_bt_sockets(self):
 		self.bt_api.close_bt_socket()

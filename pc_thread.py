@@ -33,6 +33,7 @@ class PCThread(threading.Thread):
 		print "Inside readPC:"
 		while True:
 			try:
+				time.sleep(0.5)	# Delay before reading from socket
 				read_pc_msg = self.pc_api.read_from_PC()
 				print "Value received  from PC: %s " % read_pc_msg
 
@@ -44,7 +45,7 @@ class PCThread(threading.Thread):
 
 				elif (read_pc_msg[0].lower() == 'h'):
 					to_sr_q.put(read_pc_msg[1:])	# send to hardware
-					print "testing pc q: Value written = %s " % read_pc_msg[1:]
+					print "testing sr q: Value written = %s " % read_pc_msg[1:]
 
 				else:
 					print "Incorrect header received from PC: [%s] " %read_pc_msg[0]

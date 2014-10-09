@@ -1,6 +1,7 @@
 import time
 import threading
 import serial
+import Queue
 from sr_comm import *
 
 __author__ = "Rohit"
@@ -10,6 +11,7 @@ class SRThread(threading.Thread):
 		threading.Thread.__init__(self)
 		self.sr_api = SerialAPI()
 		self.sr_api.connect_serial()
+		time.sleep(2)	#Sleep for 2 secs before starting
 
 	def writeSR(self, to_sr_q):
 		"""
@@ -21,7 +23,7 @@ class SRThread(threading.Thread):
 				send_sr_msg = to_sr_q.get()
 				self.sr_api.write_to_serial(send_sr_msg)
 				print "Writing to SR: %s" % send_sr_msg
-				time.sleep(0.5)
+				# time.sleep(0.5)
 
 	# Takes two Qs as arguments and writes (put) value read
 	# from SR into them depending on the header
@@ -40,11 +42,10 @@ class SRThread(threading.Thread):
 
 			elif (read_sr_msg[0].lower() == 'a'):# send to android
 				to_bt_q.put(read_sr_msg[1:])	#strip header here
-				print "testing bt q: value written = %s " % read_sr_msg[1:]
+				print "testing bt q: value written = [%s] " % read_sr_msg[1:]
 
 			else:
-				print "Incorrect header received from Arduino"
-
+				print "Incorrect header received from Arduino: [%s]" %read_sr_msg[0]
 
 	def close_all_sr_sockets(self):
 		"""

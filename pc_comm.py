@@ -36,13 +36,18 @@ class PcAPI(object):
 		Initiate PC connection over TCP
 		"""
 		# Create a TCP/IP socket
-		self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.conn.bind((self.tcp_ip, self.port))
-		self.conn.listen(1)		#Listen for incoming connections
-		print "Listening for incoming connections..."
-		self.client, self.addr = self.conn.accept()
-		print "Connected! Connection address: ", self.addr
-		self.pc_is_connect = True
+		try:
+			self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			self.conn.bind((self.tcp_ip, self.port))
+			self.conn.listen(1)		#Listen for incoming connections
+			print "Listening for incoming connections..."
+			self.client, self.addr = self.conn.accept()
+			print "Connected! Connection address: ", self.addr
+			self.pc_is_connect = True
+		except socket.error:
+			self.close_pc_socket()
+			self.init_pc_comm()
+
 
 	def write_to_PC(self, message):
 		"""
