@@ -4,7 +4,7 @@ import Queue
 from pc_comm import *
 
 __author__ = 'Rohit'
-pc_q_lock = threading.Lock()
+# pc_q_lock = threading.Lock()
 
 class PCThread(threading.Thread):
 	def __init__(self):
@@ -17,8 +17,8 @@ class PCThread(threading.Thread):
 		Invoke write_to_PC()
 		"""
 		time.sleep(0.2)
-		print "Sending to PC: "
 		while True:
+			print "Sending to PC: "
 			# pc_q_lock.acquire()		# Lock the thread
 			if (not to_pc_q.empty()):
 				send_pc_msg = to_pc_q.get()
@@ -36,7 +36,7 @@ class PCThread(threading.Thread):
 		# time.sleep(0.5)		# Delay before reading
 		print "Inside readPC:"
 		while True:
-			pc_q_lock.acquire()				# Lock the thread
+			# pc_q_lock.acquire()				# Lock the thread
 			try:
 				time.sleep(0.5)	# Delay before reading from socket
 				read_pc_msg = self.pc_api.read_from_PC()
@@ -45,21 +45,21 @@ class PCThread(threading.Thread):
 				# Check header for Destination and strip out first char
 				if (read_pc_msg[0].lower() == 'a'):	# send to android
 					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
-					pc_q_lock.release()		# Release the lock
+					# pc_q_lock.release()		# Release the lock
 					# print "(inside readPC) QSIZE of to_bt_q = ", to_bt_q.qsize()
 					print "testing bt q: Value written = %s " % read_pc_msg[1:]
 
 				elif (read_pc_msg[0].lower() == 'h'):
 					to_sr_q.put(read_pc_msg[1:])	# send to hardware
-					pc_q_lock.release()		# Release the lock
+					# pc_q_lock.release()		# Release the lock
 					print "testing sr q: Value written = %s " % read_pc_msg[1:]
 
 				else:
-					pc_q_lock.release()		# Release the lock
+					# pc_q_lock.release()		# Release the lock
 					print "Incorrect header received from PC: [%s] " % read_pc_msg[0]
 
 			except IndexError:
-				pc_q_lock.release()			# Release the lock
+				# pc_q_lock.release()			# Release the lock
 				print "Incorrect header format"
 
 				

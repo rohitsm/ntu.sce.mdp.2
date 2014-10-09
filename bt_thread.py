@@ -4,7 +4,7 @@ import Queue
 from bt_comm import *
 
 __author__ = 'Rohit'
-bt_q_lock = threading.Lock()
+# bt_q_lock = threading.Lock()
 
 class BTThread(threading.Thread):
 	def __init__(self):
@@ -17,15 +17,15 @@ class BTThread(threading.Thread):
 		Invoke write_to_bt()
 		"""
 		time.sleep(0.2)
-		print "Sending text to Andorid: "
 		while True:
-			bt_q_lock.acquire()		# Lock the queue
+			print "inside writeBT: "
+			# bt_q_lock.acquire()		# Lock the queue
 			if (not to_bt_q.empty()):
 				send_bt_msg = to_bt_q.get()
 				self.bt_api.write_to_bt(send_bt_msg)
 				print "Writing to BT: %s" % send_bt_msg
 			time.sleep(0.2)
-			bt_q_lock.release()		# Release the lock
+			# bt_q_lock.release()		# Release the lock
 		
 	# Takes two Qs as arguments and writes (put) value read
 	# from BT into them depending on the header
@@ -39,7 +39,7 @@ class BTThread(threading.Thread):
 			try:				
 				# bt_q_lock.acquire()		# Lock the queue
 				read_bt_msg = self.bt_api.read_from_bt()
-									
+
 				# Check header for Destination and strip out first char
 				if (read_bt_msg[0].lower() == 'p'): # send to PC
 					to_pc_q.put(read_bt_msg[1:]) 	# strip header here
