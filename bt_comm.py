@@ -60,8 +60,7 @@ class AndroidAPI(object):
 
 		except Exception, e:
 			print "Error: %s" %str(e)
-			self.close_bt_socket()
-			pass
+			# self.close_bt_socket()
 
 
 	def write_to_bt(self, message):
