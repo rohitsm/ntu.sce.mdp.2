@@ -2,9 +2,6 @@ from bluetooth import *
 
 __author__ = 'Rohit'
 
-# Server inits
-# btport = 4					# RFCOMM port 4
-
 class AndroidAPI(object):
 
 	def __init__(self):
@@ -60,7 +57,9 @@ class AndroidAPI(object):
 			self.client_socket, client_address = self.server_socket.accept()
 			print "Accepted connection from ", client_address
 			self.bt_is_connected = True
+
 		except _bluetooth.error:
+			print "Error address already in use"
 			self.close_bt_socket()
 			self.connect_bluetooth()
 
