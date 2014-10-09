@@ -33,7 +33,7 @@ class PCThread(threading.Thread):
 		"""
 		Invoke read_from_PC()
 		"""
-		time.sleep(0.5)
+		# time.sleep(0.5)		# Delay before reading
 		print "Inside readPC:"
 		while True:
 			pc_q_lock.acquire()				# Lock the thread
@@ -46,7 +46,8 @@ class PCThread(threading.Thread):
 				if (read_pc_msg[0].lower() == 'a'):	# send to android
 					to_bt_q.put(read_pc_msg[1:]) 	# Strip header here
 					pc_q_lock.release()		# Release the lock
-					print "(inside readPC) QSIZE of to_bt_q = ", to_bt_q.qsize()
+					# print "(inside readPC) QSIZE of to_bt_q = ", to_bt_q.qsize()
+					print "testing pc q: Value written = %s " % read_pc_msg[1:]
 
 				elif (read_pc_msg[0].lower() == 'h'):
 					to_sr_q.put(read_pc_msg[1:])	# send to hardware

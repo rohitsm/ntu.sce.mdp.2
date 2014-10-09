@@ -46,7 +46,7 @@ class PcAPI(object):
 			self.pc_is_connect = True
 		except socket.error:
 			self.close_pc_socket()
-			self.init_pc_comm()
+			pass
 
 
 	def write_to_PC(self, message):
@@ -54,6 +54,7 @@ class PcAPI(object):
 		Write message to PC
 		"""
 		self.client.sendto(message, self.addr)
+		print "Sent [%s] to PC" % message
 	
 
 	def read_from_PC(self):
@@ -61,6 +62,7 @@ class PcAPI(object):
 		Read incoming message from PC
 		"""
 		pc_data = self.client.recv(1024)
+		print "Read [%s] from PC" %pc_data
 		return pc_data
 
 # if __name__ == "__main__":

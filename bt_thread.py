@@ -33,25 +33,31 @@ class BTThread(threading.Thread):
 		"""
 		Invoke read_from_bt()
 		"""
-		time.sleep(0.5)	# Delay before reading
+		# time.sleep(0.2)	# Delay before reading
 		print "readBT: to_pc_q = %s " %to_pc_q
 		while True:
-			bt_q_lock.acquire()		# Lock the queue
-			read_bt_msg = self.bt_api.read_from_bt()
+			try:				
+				bt_q_lock.acquire()		# Lock the queue
+				read_bt_msg = self.bt_api.read_from_bt()
+					
+				# Check header for Destination and strip out first char
+				if (read_bt_msg[0].lower() == 'p'): # send to PC
+					to_pc_q.put(read_bt_msg[1:]) 	# strip header here
+					bt_q_lock.release()	# Release the lock
+					print "testing pc q: Value written = %s " % read_bt_msg[1:]
 				
-			# Check header for Destination and strip out first char
-			if (read_bt_msg[0].lower() == 'p'): # send to PC
-				to_pc_q.put(read_bt_msg[1:]) 	# strip header here
+				# elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
+				# 	to_sr_q.put(read_bt_msg[1:]) 	# strip header here
+				# 	print "testing serial q: Value written = %s " % read_bt_msg[1:]
+				
+				else:
+					bt_q_lock.release()	# Release the lock
+					print "Incorrect header received from BT: [%s]" %read_bt_msg[0]
+			except TypeError:
+				time.sleep(0.5)	# Sleep with the hope that item arrives
 				bt_q_lock.release()	# Release the lock
-				print "testing pc q: Value written = %s " % read_bt_msg[1:]
-			
-			# elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
-			# 	to_sr_q.put(read_bt_msg[1:]) 	# strip header here
-			# 	print "testing serial q: Value written = %s " % read_bt_msg[1:]
-			
-			else:
-				bt_q_lock.release()	# Release the lock
-				print "Incorrect header received from BT: [%s]" %read_bt_msg[0]
+				print "bt_q is empty"
+
 
 	def close_all_bt_sockets(self):
 		self.bt_api.close_bt_socket()
