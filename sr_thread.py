@@ -26,7 +26,7 @@ class SRThread(threading.Thread):
 				send_sr_msg = to_sr_q.get()
 				self.sr_api.write_to_serial(send_sr_msg)
 				print "Writing to SR: %s" % send_sr_msg
-				# time.sleep(0.5)
+				time.sleep(0.5)
 			# sr_q_lock.release()		# Release the lock
 
 	# Takes two Qs as arguments and writes (put) value read
@@ -45,11 +45,11 @@ class SRThread(threading.Thread):
 			if (read_sr_msg[0].lower() == 'p'): # send to PC
 				to_pc_q.put(read_sr_msg[1:])	# strip header here
 				# sr_q_lock.release()		# Release the lock
-				# print "testing pc q: Value written = %s " % read_sr_msg[1:]
+				print "testing pc q: Value written = %s " % read_sr_msg[1:]
 
 			elif (read_sr_msg[0].lower() == 'a'):# send to android
 				to_bt_q.put(read_sr_msg[1:])	#strip header here
-				# print "testing bt q: value written = [%s] " % read_sr_msg[1:]
+				print "testing bt q: value written = [%s] " % read_sr_msg[1:]
 
 			else:
 				print "Incorrect header received from Arduino: [%s]" %read_sr_msg[0]
