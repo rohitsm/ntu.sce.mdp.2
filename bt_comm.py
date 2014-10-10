@@ -79,7 +79,7 @@ class AndroidAPI(object):
 		Read incoming message from Nexus
 		"""
 		try:
-			msg = self.client_socket.recv(1024)
+			msg = self.client_socket.recv(2048)
 			print "Received [%s] " % msg
 			return msg
 		except BluetoothError:
