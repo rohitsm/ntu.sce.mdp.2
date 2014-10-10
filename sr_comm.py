@@ -13,8 +13,11 @@ class SerialAPI(object):
 		"""
 		Initialize serial socket
 		"""
-		self.ser = serial.Serial(self.port, self.baud_rate)
-		print "Serial link connected"
+		try:
+			self.ser = serial.Serial(self.port, self.baud_rate)
+			print "Serial link connected"
+		except Exception, e:
+			print "Error (Serial): %s " % str(e)
 
 
 	def close_sr_socket(self):

@@ -45,11 +45,11 @@ class SRThread(threading.Thread):
 			if (read_sr_msg[0].lower() == 'p'): # send to PC
 				to_pc_q.put(read_sr_msg[1:])	# strip header here
 				# sr_q_lock.release()		# Release the lock
-				print "testing pc q: Value written = %s " % read_sr_msg[1:]
+				# print "testing pc q: Value written = %s " % read_sr_msg[1:]
 
-			# elif (read_sr_msg[0].lower() == 'a'):# send to android
-			# 	to_bt_q.put(read_sr_msg[1:])	#strip header here
-			# 	print "testing bt q: value written = [%s] " % read_sr_msg[1:]
+			elif (read_sr_msg[0].lower() == 'a'):# send to android
+				to_bt_q.put(read_sr_msg[1:])	#strip header here
+				# print "testing bt q: value written = [%s] " % read_sr_msg[1:]
 
 			else:
 				print "Incorrect header received from Arduino: [%s]" %read_sr_msg[0]

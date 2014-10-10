@@ -24,7 +24,7 @@ class BTThread(threading.Thread):
 				send_bt_msg = to_bt_q.get()
 				self.bt_api.write_to_bt(send_bt_msg)
 				print "Writing to BT: %s" % send_bt_msg
-			time.sleep(0.2)
+			time.sleep(0.5)
 			# bt_q_lock.release()		# Release the lock
 		
 	# Takes two Qs as arguments and writes (put) value read
@@ -44,11 +44,11 @@ class BTThread(threading.Thread):
 				if (read_bt_msg[0].lower() == 'p'): # send to PC
 					to_pc_q.put(read_bt_msg[1:]) 	# strip header here
 					# bt_q_lock.release()	# Release the lock
-					print "testing pc q: Value written = %s " % read_bt_msg[1:]
+					# print "testing pc q: Value written = %s " % read_bt_msg[1:]
 				
-				# elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
-				# 	to_sr_q.put(read_bt_msg[1:]) 	# strip header here
-				# 	print "testing serial q: Value written = %s " % read_bt_msg[1:]
+				elif (read_bt_msg[0].lower() == 'h'):	# send to hardware (serial)
+					to_sr_q.put(read_bt_msg[1:]) 	# strip header here
+					print "testing serial q: Value written = %s " % read_bt_msg[1:]
 				
 				else:
 					# bt_q_lock.release()	# Release the lock
