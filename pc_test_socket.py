@@ -9,7 +9,7 @@ __author__ = "Rohit"
 
 
 ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-port = 5181
+port = 5179
 # message = "Hello World!"
 message = list(string.ascii_lowercase)
 
@@ -37,9 +37,9 @@ def write(count = 0):
 def receive():
 	while True:
 		data = client_socket.recv(1024)
-		# if len(data) == 0 or data == 'q':
-		# 	print "quitting..."
-		# 	break
+		if len(data) == 0:
+			print "quitting..."
+			break
 		print "Data received: %s " % data
 		# while True:
 		# 	if (data == 'q' or len(data) == 0):

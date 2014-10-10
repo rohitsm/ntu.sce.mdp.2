@@ -1,68 +1,186 @@
 import sys
+import time
 import Queue
 import threading
-from pc_thread import *
-from bt_thread import *
-from sr_thread import *
+from pc_comm import *
+from bt_comm import *
+from sr_comm import *
 
 __author__ = 'Rohit'
 
-# Create queues
-to_bt = Queue.Queue() 
-to_pc = Queue.Queue()
-to_sr = Queue.Queue()		# Serial queue
+class Main(threading.Thread):
+	def __init__(self):
+		threading.Thread.__init__(self)
+
+		self.pc_thread = PcAPI()
+		self.bt_thread = AndroidAPI()
+		self.sr_thread = SerialAPI()
+
+		# Initialize the connections
+		self.pc_thread.init_pc_comm()
+		self.bt_thread.connect_bluetooth()
+		self.sr_thread.connect_serial()
+		time.sleep(2)	# wait for 2 secs before starting
+
+
+	# PC Functions
+
+	def writePC(self, msg_to_pc):
+		"""
+		Write to PC. Invoke write_to_PC()
+		"""
+		self.pc_thread.write_to_PC(msg_to_pc)
+		print "WritePC: Sent to PC: %s" % msg_to_pc
+
+	def readPC(self):
+		"""
+		Read from PC. Invoke read_from_PC() and send 
+		data according to header
+		"""
+		print "Inside readPC"
+		while True:
+			read_pc_msg = self.pc_thread.read_from_PC()
+
+			# Check header for destination and strip out first char
+			
+			if(read_pc_msg[0].lower() == 'a'):		# send to android
+				self.writeBT(read_pc_msg[1:])		# strip the header
+				print "value written to BT from PC: %s" % read_pc_msg[1:]
+
+			elif(read_pc_msg[0].lower() == 'h'):	# send to arduino
+				self.writeSR(read_pc_msg[1:])		# strip the header
+				print "value written to SR from PC: %s" % read_pc_msg[1:]
+
+			else:
+				print "incorrect header received from PC: [%s]" % read_pc_msg[0]
+				time.sleep(1)	
+
+
+	# Android/BT functions
+
+	def writeBT(self, msg_to_bt):
+		"""
+		Write to BT. Invoke write_to_bt()
+		"""
+		self.bt_thread.write_to_bt(msg_to_bt)
+		print "WriteBT: Sent to BT: %s" % msg_to_bt
+
+	def readBT(self):
+		"""
+		Read from BT. Invoke read_from_bt() and send
+		data to PC
+		"""
+		print "Inside readBT"
+		while True:
+			read_bt_msg = self.bt_thread.read_from_bt()
+
+			# Check header and send data to PC
+			if(read_bt_msg[0].lower() == 'p'):	# send to PC
+				self.writePC(read_bt_msg[1:])	# strip the header
+				print "value written to PC from BT: %s" % read_bt_msg[1:]
+
+	#### this case can be commented out ####
+			elif(read_bt_msg[0].lower() == 'h'):	# send to SR
+				self.writeSR(read_bt_msg[1:])		# strip the header
+				print "value writen to SR from BT: %s" % read_bt_msg[1:]
+
+			else:
+				print "incorrect header received from BT: [%s]" % read_bt_msg[0]
+				time.sleep(1)
+
+	# Serial Comm functions
+
+	def writeSR(self, msg_to_sr):
+		"""
+		Write to Serial. Invoke write_to_serial()
+		"""
+		print "Inside writeSR"
+		self.sr_thread.write_to_serial(msg_to_sr)
+		print "WriteSR: Sent to SR: %s" % msg_to_sr
+
+	def readSR(self):
+		"""
+		Read from SR. Invoke read_from_serial() and send
+		data to PC
+		"""
+		print "Inside readSR"
+		while True:
+			read_sr_msg = self.sr_thread.read_from_serial()
+
+
+			# # Write straight to PC without any checking
+			# self.writePC(read_sr_msg)	
+
+#### Remember to comment this out and use direct communication with PC
+
+
+			# Check header and send data to PC
+			if(read_sr_msg[0].lower() == 'p'):	# send to PC
+				self.writePC(read_sr_msg[1:])	# strip the header
+				print "value written to PC from SR: %s" % read_sr_msg[1:]
+
+	##### this can be commented out ####
+			elif(read_bt_msg[0].lower() == 'a'):	# send to BT
+				self.writeBT(read_sr_msg[1:])		# strip the header
+				print "value written to BT from SR: %s" % read_sr_msg[1:]
+
+			else:
+				print "incorrect header received from SR: [%s]" % read_sr_msg[0]
+				time.sleep(1)
+
+		
+	def initialize_threads(self):
+
+		# PC read and write thread
+		rt_pc = threading.Thread(target = self.readPC, name = "pc_read_thread")
+		print "created rt_pc"
+		wt_pc = threading.Thread(target = self.writePC, args = ("",), name = "pc_write_thread")
+		print "created wt_pc"
+
+		# Bluetooth (BT) read and write thread
+		rt_bt = threading.Thread(target = self.readBT, name = "bt_read_thread")
+		print "created rt_bt"
+		wt_bt = threading.Thread(target = self.writeBT, args = ("",), name = "bt_write_thread")
+		print "created wt_bt"
+
+
+		# # Serial (SR) read and write thread
+		# rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
+		# print "created rt_sr"
+		# wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
+		# print "created wt_sr"
+
+		# Start Threads
+		rt_pc.start()
+		wt_pc.start()
+
+		rt_bt.start()
+		wt_bt.start()
+
+		# rt_sr.start()
+		# wt_sr.start()
+	
+		print "start rt and wt"
+
+
+	def close_all_sockets(self):
+		"""
+		Close all sockets
+		"""
+		pc_thread.close_all_pc_sockets()
+		bt_thread.close_all_bt_sockets()
+		sr_thread.close_all_sr_sockets()
+		print "end threads"
+		
+
 
 if __name__ == "__main__":
-	pc_thread = PCThread()
-	bt_thread = BTThread()
-	sr_thread = SRThread()
-
-	# PC read and write thread
-	rt_pc = threading.Thread(target = pc_thread.readPC, args = (to_bt, to_sr,), name = "pc_read_thread")
-	print "created rt_pc"
-	wt_pc = threading.Thread(target = pc_thread.writePC, args = (to_pc,), name = "pc_write_thread")
-	print "created wt_pc"
-
-	# Bluetooth (BT) read and write thread
-	rt_bt = threading.Thread(target = bt_thread.readBT, args = (to_pc, to_sr,), name = "bt_read_thread")
-	print "created rt_bt"
-	wt_bt = threading.Thread(target = bt_thread.writeBT, args = (to_bt,), name = "bt_write_thread")
-	print "created wt_bt"
+	test = Main()
+	test.initialize_threads()
+	# test.close_all_sockets()
 
 
-	# Serial (SR) read and write thread
-	rt_sr = threading.Thread(target = sr_thread.readSR, args = (to_pc, to_bt,), name = "sr_read_thread")
-	print "created rt_sr"
-	wt_sr = threading.Thread(target = sr_thread.writeSR, args = (to_sr,), name = "sr_write_thread")
-	print "created wt_sr"
 
 
-	# Start Threads
-	rt_pc.start()
-	wt_pc.start()
 
-	rt_bt.start()
-	wt_bt.start()
-
-	rt_sr.start()
-	wt_sr.start()
 	
-	print "start rt and wt"
-
-	# Handle the joins
-	rt_pc.join()
-	wt_pc.join()
-
-	rt_bt.join()
-	wt_bt.join()
-
-	rt_sr.join()
-	wt_sr.join()
-
-	print "end of joins"
-
-	pc_thread.close_all_pc_sockets()
-	bt_thread.close_all_bt_sockets()
-	sr_thread.close_all_sr_sockets()
-	
-	print "End thread"

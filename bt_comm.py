@@ -80,7 +80,7 @@ class AndroidAPI(object):
 		"""
 		try:
 			msg = self.client_socket.recv(2048)
-			print "Received [%s] " % msg
+			# print "Received [%s] " % msg
 			return msg
 		except BluetoothError:
 			print "Bluetooth Error. Connection reset by peer. Trying to connect"
