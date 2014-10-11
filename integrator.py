@@ -109,24 +109,25 @@ class Main(threading.Thread):
 
 
 			# # Write straight to PC without any checking
-			# self.writePC(read_sr_msg)	
+			self.writePC(read_sr_msg)	
+			# time.sleep(1)
 
 #### Remember to comment this out and use direct communication with PC
 
 
-			# Check header and send data to PC
-			if(read_sr_msg[0].lower() == 'p'):	# send to PC
-				self.writePC(read_sr_msg[1:])	# strip the header
-				print "value written to PC from SR: %s" % read_sr_msg[1:]
+	# 		# Check header and send data to PC
+	# 		if(read_sr_msg[0].lower() == 'p'):	# send to PC
+	# 			self.writePC(read_sr_msg[1:])	# strip the header
+	# 			print "value written to PC from SR: %s" % read_sr_msg[1:]
 
-	##### this can be commented out ####
-			elif(read_bt_msg[0].lower() == 'a'):	# send to BT
-				self.writeBT(read_sr_msg[1:])		# strip the header
-				print "value written to BT from SR: %s" % read_sr_msg[1:]
+	# ##### this can be commented out ####
+	# 		elif(read_bt_msg[0].lower() == 'a'):	# send to BT
+	# 			self.writeBT(read_sr_msg[1:])		# strip the header
+	# 			print "value written to BT from SR: %s" % read_sr_msg[1:]
 
-			else:
-				print "incorrect header received from SR: [%s]" % read_sr_msg[0]
-				time.sleep(1)
+	# 		else:
+	# 			print "incorrect header received from SR: [%s]" % read_sr_msg[0]
+	# 			time.sleep(1)
 
 		
 	def initialize_threads(self):
@@ -143,12 +144,11 @@ class Main(threading.Thread):
 		wt_bt = threading.Thread(target = self.writeBT, args = ("",), name = "bt_write_thread")
 		print "created wt_bt"
 
-
 		# # Serial (SR) read and write thread
-		# rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
-		# print "created rt_sr"
-		# wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
-		# print "created wt_sr"
+		rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
+		print "created rt_sr"
+		wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
+		print "created wt_sr"
 
 		# Start Threads
 		rt_pc.start()
@@ -157,8 +157,8 @@ class Main(threading.Thread):
 		rt_bt.start()
 		wt_bt.start()
 
-		# rt_sr.start()
-		# wt_sr.start()
+		rt_sr.start()
+		wt_sr.start()
 	
 		print "start rt and wt"
 
