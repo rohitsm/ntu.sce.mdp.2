@@ -46,6 +46,7 @@ class PcAPI(object):
 			self.pc_is_connect = True
 		except Exception, e: 	#socket.error:
 			print "Error: %s" % str(e)
+			print "Try again in a few seconds"
 
 
 	def write_to_PC(self, message):

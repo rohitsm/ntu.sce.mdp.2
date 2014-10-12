@@ -106,8 +106,7 @@ class Main(threading.Thread):
 		while True:
 			read_sr_msg = self.sr_thread.read_from_serial()
 
-
-			# # Write straight to PC without any checking
+			# Write straight to PC without any checking
 			self.writePC(read_sr_msg)
 			print "value received from arduino: %s" % read_sr_msg	
 			# time.sleep(1)
@@ -144,10 +143,10 @@ class Main(threading.Thread):
 		wt_bt = threading.Thread(target = self.writeBT, args = ("",), name = "bt_write_thread")
 		# print "created wt_bt"
 
-		# # Serial (SR) read and write thread
-		# rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
+		# Serial (SR) read and write thread
+		rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
 		# print "created rt_sr"
-		# wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
+		wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
 		# print "created wt_sr"
 
 
@@ -158,8 +157,8 @@ class Main(threading.Thread):
 		rt_bt.daemon = True
 		wt_bt.daemon = True
 
-		# rt_sr.daemon = True
-		# wt_sr.daemon = True
+		rt_sr.daemon = True
+		wt_sr.daemon = True
 
 		print "All threads initialized successfully"
 
@@ -174,7 +173,7 @@ class Main(threading.Thread):
 		# rt_sr.start()
 		# wt_sr.start()
 	
-		print "Starting rt and wt threads"
+		# print "Starting rt and wt threads"
 
 
 	def close_all_sockets(self):
