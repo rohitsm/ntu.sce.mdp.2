@@ -31,7 +31,7 @@ class SerialAPI(object):
 		Write to arduino
 		"""
 		self.ser.write(msg)
-		print "Write to arduino: %s " % msg
+		# print "Write to arduino: %s " % msg
 
 	def read_from_serial(self):
 		"""
@@ -39,9 +39,8 @@ class SerialAPI(object):
 
 		Waits until data is received from arduino
 		"""
-		print "inside read_from_serial"
 		received_data = self.ser.readline()
-		print "Received from arduino: %s " % received_data
+		# print "Received from arduino: %s " % received_data
 		return received_data
 
 

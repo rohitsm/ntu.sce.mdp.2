@@ -45,11 +45,11 @@ class Main(threading.Thread):
 			
 			if(read_pc_msg[0].lower() == 'a'):		# send to android
 				self.writeBT(read_pc_msg[1:])		# strip the header
-				print "value written to BT from PC: %s" % read_pc_msg[1:]
+				print "value received from PC: %s" % read_pc_msg[1:]
 
 			elif(read_pc_msg[0].lower() == 'h'):	# send to arduino
 				self.writeSR(read_pc_msg[1:])		# strip the header
-				print "value written to SR from PC: %s" % read_pc_msg[1:]
+				print "value received from PC: %s" % read_pc_msg[1:]
 
 			else:
 				print "incorrect header received from PC: [%s]" % read_pc_msg[0]
@@ -63,26 +63,26 @@ class Main(threading.Thread):
 		Write to BT. Invoke write_to_bt()
 		"""
 		self.bt_thread.write_to_bt(msg_to_bt)
-		print "WriteBT: Sent to BT: %s" % msg_to_bt
+		print "Value sent to Android: %s" % msg_to_bt
 
 	def readBT(self):
 		"""
 		Read from BT. Invoke read_from_bt() and send
 		data to PC
 		"""
-		print "Inside readBT"
+		# print "Inside readBT"
 		while True:
 			read_bt_msg = self.bt_thread.read_from_bt()
 
 			# Check header and send data to PC
 			if(read_bt_msg[0].lower() == 'p'):	# send to PC
 				self.writePC(read_bt_msg[1:])	# strip the header
-				print "value written to PC from BT: %s" % read_bt_msg[1:]
+				print "Value received from Android: %s" % read_bt_msg[1:]
 
 	#### this case can be commented out ####
-			elif(read_bt_msg[0].lower() == 'h'):	# send to SR
-				self.writeSR(read_bt_msg[1:])		# strip the header
-				print "value writen to SR from BT: %s" % read_bt_msg[1:]
+			# elif(read_bt_msg[0].lower() == 'h'):	# send to SR
+			# 	self.writeSR(read_bt_msg[1:])		# strip the header
+			# 	print "value received from BT: %s" % read_bt_msg[1:]
 
 			else:
 				print "incorrect header received from BT: [%s]" % read_bt_msg[0]
@@ -94,9 +94,8 @@ class Main(threading.Thread):
 		"""
 		Write to Serial. Invoke write_to_serial()
 		"""
-		print "Inside writeSR"
 		self.sr_thread.write_to_serial(msg_to_sr)
-		print "WriteSR: Sent to SR: %s" % msg_to_sr
+		print "Value sent to arduino: %s" % msg_to_sr
 
 	def readSR(self):
 		"""
@@ -109,7 +108,8 @@ class Main(threading.Thread):
 
 
 			# # Write straight to PC without any checking
-			self.writePC(read_sr_msg)	
+			self.writePC(read_sr_msg)
+			print "value received from arduino: %s" % read_sr_msg	
 			# time.sleep(1)
 
 #### Remember to comment this out and use direct communication with PC
@@ -134,15 +134,15 @@ class Main(threading.Thread):
 
 		# PC read and write thread
 		rt_pc = threading.Thread(target = self.readPC, name = "pc_read_thread")
-		print "created rt_pc"
+		# print "created rt_pc"
 		wt_pc = threading.Thread(target = self.writePC, args = ("",), name = "pc_write_thread")
-		print "created wt_pc"
+		# print "created wt_pc"
 
 		# Bluetooth (BT) read and write thread
 		rt_bt = threading.Thread(target = self.readBT, name = "bt_read_thread")
-		print "created rt_bt"
+		# print "created rt_bt"
 		wt_bt = threading.Thread(target = self.writeBT, args = ("",), name = "bt_write_thread")
-		print "created wt_bt"
+		# print "created wt_bt"
 
 		# # Serial (SR) read and write thread
 		# rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
@@ -155,11 +155,13 @@ class Main(threading.Thread):
 		rt_pc.daemon = True
 		wt_pc.daemon = True
 
-		rt_br.daemon = True
+		rt_bt.daemon = True
 		wt_bt.daemon = True
 
 		# rt_sr.daemon = True
 		# wt_sr.daemon = True
+
+		print "All threads initialized successfully"
 
 
 		# Start Threads
@@ -172,7 +174,7 @@ class Main(threading.Thread):
 		# rt_sr.start()
 		# wt_sr.start()
 	
-		print "start rt and wt"
+		print "Starting rt and wt threads"
 
 
 	def close_all_sockets(self):
@@ -190,8 +192,6 @@ class Main(threading.Thread):
 		"""
 		while True:
 			time.sleep(1)
-
-		
 
 
 if __name__ == "__main__":

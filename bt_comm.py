@@ -52,7 +52,7 @@ class AndroidAPI(object):
 			                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
 			                   profiles = [ SERIAL_PORT_PROFILE ],
 								)
-			print "Waiting for connection on RFCOMM channel %d" % self.port
+			print "Waiting for BT connection on RFCOMM channel %d" % self.port
 			# Accept requests
 			self.client_socket, client_address = self.server_socket.accept()
 			print "Accepted connection from ", client_address
@@ -83,7 +83,7 @@ class AndroidAPI(object):
 			# print "Received [%s] " % msg
 			return msg
 		except BluetoothError:
-			print "Bluetooth Error. Connection reset by peer. Trying to connect"
+			print "Bluetooth Error. Connection reset by peer. Trying to connect..."
 			self.connect_bluetooth()	# Reestablish connection
 
 # if __name__ == "__main__":

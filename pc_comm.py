@@ -40,13 +40,12 @@ class PcAPI(object):
 			self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			self.conn.bind((self.tcp_ip, self.port))
 			self.conn.listen(1)		#Listen for incoming connections
-			print "Listening for incoming connections..."
+			print "Listening for incoming connections from PC..."
 			self.client, self.addr = self.conn.accept()
 			print "Connected! Connection address: ", self.addr
 			self.pc_is_connect = True
 		except Exception, e: 	#socket.error:
 			print "Error: %s" % str(e)
-			# self.close_pc_socket()
 
 
 	def write_to_PC(self, message):

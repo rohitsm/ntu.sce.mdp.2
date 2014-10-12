@@ -27,7 +27,7 @@ class Test(threading.Thread):
 		while True:
 			# if (count == 1):
 			# 	break
-			client_socket.send(msg)
+			self.client_socket.send(msg)
 			print "sending: ", msg
 			# print "Enter text to send: "
 			msg = raw_input("Enter a value:")
@@ -57,6 +57,9 @@ if __name__ == "__main__":
 
 	rt = threading.Thread(target = test.receive)
 	wt = threading.Thread(target = test.write)
+
+	rt.daemon = True
+	wt.daemon = True
 
 	rt.start()
 	wt.start()
