@@ -145,10 +145,10 @@ class Main(threading.Thread):
 		print "created wt_bt"
 
 		# # Serial (SR) read and write thread
-		rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
-		print "created rt_sr"
-		wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
-		print "created wt_sr"
+		# rt_sr = threading.Thread(target = self.readSR, name = "sr_read_thread")
+		# print "created rt_sr"
+		# wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
+		# print "created wt_sr"
 
 		# Start Threads
 		rt_pc.start()
@@ -157,8 +157,8 @@ class Main(threading.Thread):
 		rt_bt.start()
 		wt_bt.start()
 
-		rt_sr.start()
-		wt_sr.start()
+		# rt_sr.start()
+		# wt_sr.start()
 	
 		print "start rt and wt"
 
@@ -171,12 +171,21 @@ class Main(threading.Thread):
 		bt_thread.close_all_bt_sockets()
 		sr_thread.close_all_sr_sockets()
 		print "end threads"
+
+	def keep_main_alive(self):
+		"""
+		Allows for a Ctrl+C kill while keeping the main() alive
+		"""
+		while True:
+			time.sleep(1)
+
 		
 
 
 if __name__ == "__main__":
 	test = Main()
 	test.initialize_threads()
+	test.keep_main_alive()
 	# test.close_all_sockets()
 
 
