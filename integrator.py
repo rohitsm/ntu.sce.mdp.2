@@ -150,6 +150,18 @@ class Main(threading.Thread):
 		# wt_sr = threading.Thread(target = self.writeSR, args = ("",), name = "sr_write_thread")
 		# print "created wt_sr"
 
+
+		# Set threads as daemons
+		rt_pc.daemon = True
+		wt_pc.daemon = True
+
+		rt_br.daemon = True
+		wt_bt.daemon = True
+
+		# rt_sr.daemon = True
+		# wt_sr.daemon = True
+
+
 		# Start Threads
 		rt_pc.start()
 		wt_pc.start()
