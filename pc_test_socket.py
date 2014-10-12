@@ -11,7 +11,7 @@ class Test(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.ip = "192.168.2.2" # Connecting to IP address of MDPGrp2
-		self.port = 5183
+		self.port = 5182
 		# message = "Hello World!"
 		# message = list(string.ascii_lowercase)
 
@@ -37,7 +37,7 @@ class Test(threading.Thread):
 	# Receive data
 	def receive(self):
 		while True:
-			data = client_socket.recv(1024)
+			data = self.client_socket.recv(1024)
 			if len(data) == 0:
 				print "quitting..."
 				break
@@ -69,5 +69,5 @@ if __name__ == "__main__":
 	# print "stop rt and wt"
 
 	# Close connections
-	# self.client_socket.close()
+	self.client_socket.close()
 	print "End of client program"

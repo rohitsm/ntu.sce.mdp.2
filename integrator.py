@@ -186,7 +186,7 @@ if __name__ == "__main__":
 	test = Main()
 	test.initialize_threads()
 	test.keep_main_alive()
-	# test.close_all_sockets()
+	test.close_all_sockets()
 
 
 
