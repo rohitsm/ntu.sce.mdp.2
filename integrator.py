@@ -170,8 +170,8 @@ class Main(threading.Thread):
 		rt_bt.start()
 		wt_bt.start()
 
-		# rt_sr.start()
-		# wt_sr.start()
+		rt_sr.start()
+		wt_sr.start()
 	
 		# print "Starting rt and wt threads"
 

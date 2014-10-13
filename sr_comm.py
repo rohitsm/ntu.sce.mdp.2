@@ -48,7 +48,7 @@ class SerialAPI(object):
 			# print "Received from arduino: %s " % received_data
 			return received_data
 		except AttributeError:
-				print "Error in serial comm. No value received. Check connection!"
+			print "Error in serial comm. No value received. Check connection!"
 
 
 # if __name__ == "__main__":
