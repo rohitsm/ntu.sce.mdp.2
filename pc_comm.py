@@ -53,17 +53,24 @@ class PcAPI(object):
 		"""
 		Write message to PC
 		"""
-		self.client.sendto(message, self.addr)
-		# print "Sent [%s] to PC" % message
-	
+		try:
+			self.client.sendto(message, self.addr)
+			# print "Sent [%s] to PC" % message
+		except TypeError:
+			print "Error: Null value cannot be sent"
+
 
 	def read_from_PC(self):
 		"""
 		Read incoming message from PC
 		"""
-		pc_data = self.client.recv(2048)
-		# print "Read [%s] from PC" %pc_data
-		return pc_data
+		try:
+			pc_data = self.client.recv(2048)
+			# print "Read [%s] from PC" %pc_data
+			return pc_data
+		except Exception, e:
+			print "Error: %s " % str(e)
+			print "Value not read from PC"
 
 # if __name__ == "__main__":
 # 	print "main"
