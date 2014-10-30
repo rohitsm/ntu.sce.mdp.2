@@ -70,7 +70,7 @@ When the message is first sent to the RPi, it strips out the first character in 
 
 It is important to leave the Source header of the message intact for the receiver because of the way the data needs to be handled. For example, the PC might receive data from, both, the Arduino and the Android device (Nexus 7 tablet). However, the operations that deal with the message content in both cases are different. The receiver therefore has an additional operation that identifies and strips the source header of the message before operating upon the actual data contained in the message.
 
-The colon ‘:’ is used to indicate the start of the message content. Therefore, the receiver parses the message and extracts the contents after the colon.
+The colon `:` is used to indicate the start of the message content. Therefore, the receiver parses the message and extracts the contents after the colon.
 
 Communication between the other devices are also handled in a similar fashion. It is important to note that the RPi does not read any of the actual message contents by itself to avoid any form of data corruption. It simply strips out the first header.
 
