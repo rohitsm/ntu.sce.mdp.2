@@ -3,11 +3,11 @@
 ###About###
 The Raspberry Pi (RPi) board is a credit card-sized single-board computer. It is based on an ARM 11 processor based system on a chip (SoC) which also contains a GPU that actually performs the boot-up of the board. The Pi originally shipped with 256MB of RAM and uses a Secure Digital card for persistent storage. The RPi runs a version of the popular Debian Linux OS called Raspbian.
 
-![alt text](https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/Rpi.jpg, "Raspberry Pi")
+![alt text](https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/Rpi.jpg "Raspberry Pi")
 
 In the setup of the mobile robotic system, the Raspberry Pi (RPi) serves as the key component that forms the command centre. It forms the main platform of the system interfacing with the rest of the components as shown in figure 2 below. It coordinates and passes information between the different system components and can also execute extensive functions if required.
 
-![alt text](https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/Setup.png, "Setup")
+![alt text](https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/Setup.png "Setup")
 
 
 ###Interface Setup###
@@ -35,7 +35,7 @@ The source and the destination headers are single characters that have been deci
 
 ![alt text][logo]
 
-[logo]: https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/table1.png, "Table 1"
+[logo]: https://github.com/rohitsm/ntu.sce.mdp.2/blob/master/Images/table1.png "Table 1"
 
 ###Message passing:###
 
